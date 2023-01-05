@@ -1,15 +1,23 @@
 {
   "name": "cli",
   "version": "0.0.1",
-  "description": "cli",
+  "description": "自用 cli 合集",
   "main": "dist/index.js",
-  "author": "jsjzh",
+  "author": "jsjzh <kimimi_king@163.com>",
   "license": "MIT",
   "bin": {
     "cli": "bin/index.js"
   },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js"
+    "build": "esbuild src/index.ts --bundle --minify --platform=node --target=node10 --color=true --outfile=dist/index.js"
+  },
+  "homepage": "https://github.com/jsjzh/cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsjzh/cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jsjzh/cli/issues"
   },
   "dependencies": {
     "commander": "^9.4.1"
