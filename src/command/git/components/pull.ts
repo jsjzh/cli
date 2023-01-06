@@ -1,11 +1,12 @@
 import { createCommand } from "commander";
-import { execSync } from "child_process";
+import { runLineCmd } from "../../../util";
 
 const pull = () =>
   createCommand("pull")
     .description("自动运行 git pull")
     .action((params) => {
-      execSync("git pull");
+      const run = runLineCmd();
+      run("git pull");
     });
 
 export default pull;
