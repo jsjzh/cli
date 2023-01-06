@@ -9,8 +9,9 @@
     "cli": "bin/index.js"
   },
   "scripts": {
-    "buildCli": "esbuild src/index.ts --bundle --minify --platform=node --target=node10 --color=true --outfile=dist/index.js",
-    "build": "node build/index.js"
+    "build:cli": "esbuild src/index.ts --bundle --minify --platform=node --target=node10 --color=true --alias:@=src --outfile=dist/index.js",
+    "build:js": "node build/index.js",
+    "build": "npm run build:cli"
   },
   "homepage": "https://github.com/jsjzh/cli#readme",
   "repository": {
