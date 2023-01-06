@@ -9,7 +9,8 @@
     "cli": "bin/index.js"
   },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --minify --platform=node --target=node10 --color=true --outfile=dist/index.js"
+    "buildCli": "esbuild src/index.ts --bundle --minify --platform=node --target=node10 --color=true --outfile=dist/index.js",
+    "build": "node build/index.js"
   },
   "homepage": "https://github.com/jsjzh/cli#readme",
   "repository": {
@@ -20,7 +21,9 @@
     "url": "https://github.com/jsjzh/cli/issues"
   },
   "dependencies": {
-    "commander": "^9.4.1"
+    "axios": "^1.2.2",
+    "commander": "^9.4.1",
+    "dayjs": "^1.11.7"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
