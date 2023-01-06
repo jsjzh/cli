@@ -1,7 +1,7 @@
 import { createCommand } from "commander";
-import pull from "./components/pull";
-import push from "./components/push";
-import hosts from "./components/hosts";
+import pull from "./_command/pull";
+import push from "./_command/push";
+import hosts from "./_command/hosts";
 
 const git = () => {
   const program = createCommand("git");
