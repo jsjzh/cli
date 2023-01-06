@@ -1,14 +1,13 @@
 import { Command } from "commander";
-import pkg from "../package.json";
 
-import git from "./command/git";
+import git from "@/command/git";
 
 const program = new Command();
 
 program
-  .name(pkg.name)
-  .description(pkg.description)
-  .version(pkg.version)
+  .name("cli")
+  .description("自用 cli 合集")
+  .version("0.0.1")
   .addCommand(git());
 
 program.parse(process.argv);

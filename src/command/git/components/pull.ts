@@ -1,5 +1,5 @@
 import { createCommand } from "commander";
-import { runLineCmd } from "../../../util";
+import { runLineCmd } from "@/util";
 
 const pull = () =>
   createCommand("pull")
