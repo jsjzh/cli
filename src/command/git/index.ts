@@ -1,6 +1,12 @@
 import { createCommand } from "commander";
+import pull from "./components/pull";
 import push from "./components/push";
 
-const createGitCommand = () => createCommand("git").addCommand(push());
+const git = () => {
+  const program = createCommand("git");
+  program.description("git 操作相关代码");
+  program.addCommand(push()).addCommand(pull());
+  return program;
+};
 
-export default createGitCommand;
+export default git;
