@@ -12,6 +12,9 @@ const push = () =>
       run("git add .");
       run(`git commit -m '${params.message}'`);
       run(`git push origin ${params.branch}`);
+      console.log(
+        `代码提交成功，提交分支：${params.branch}，提交内容：${params.message}`,
+      );
     });
 
 export default push;

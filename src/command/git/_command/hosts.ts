@@ -17,6 +17,7 @@ const hosts = () =>
         str,
       );
       writeFileSync("/etc/hosts", newHosts);
+      console.log("/etc/hosts 更新成功");
     });
 
 export default hosts;

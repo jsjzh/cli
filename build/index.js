@@ -8,7 +8,7 @@ esbuild.build({
   target: "node10",
   color: true,
   bundle: true,
-  // minify: true,
+  minify: true,
   alias: {
     "@": path.resolve(process.cwd(), "src"),
   },
