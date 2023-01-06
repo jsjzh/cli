@@ -5,7 +5,9 @@ import api from "@/api";
 
 const hosts = () =>
   createCommand("hosts")
-    .description("自动更新 hosts")
+    .description(
+      "自动更新 hosts，需要有 /etc/hosts 的写入权限，且文件需要有「# @@_INSERT_START_@@」和「# @@_INSERT_END_@@」前后缀",
+    )
     .action(async () => {
       const hosts = await api.git.hosts();
       const str = `# @@_INSERT_START_@@\n# ${dayjs().format()}${hosts}# @@_INSERT_END_@@`;
