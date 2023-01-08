@@ -1,12 +1,11 @@
 import { createCommand } from "commander";
 import { runLineCmd } from "@/util";
 
-const test = () =>
-  createCommand("test")
-    .description("test")
+const hello = () =>
+  createCommand("hello")
+    .description("hello world")
     .action((params) => {
-      const run = runLineCmd();
       console.log("hello world");
     });
 
-export default test;
+export default hello;

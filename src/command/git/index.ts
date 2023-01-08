@@ -5,7 +5,7 @@ import hosts from "./_command/hosts";
 
 const git = () => {
   const program = createCommand("git");
-  program.description("git 操作相关代码");
+  program.description("git 操作脚本合集");
   program.addCommand(push()).addCommand(pull()).addCommand(hosts());
   return program;
 };
