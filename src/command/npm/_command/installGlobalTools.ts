@@ -9,6 +9,10 @@ const installGlobalTools = () =>
     .action(async (params) => {
       const run = runLineCmd();
       await run(`npm install -g ${arr.join(" ")}`);
+      arr.forEach(async (tools) => {
+        const versionInfo = await run(`${tools} --version`, false, false);
+        console.log(`${tools} 的版本为：${versionInfo.replace(/\s/, "")}`);
+      });
     });
 
 export default installGlobalTools;
