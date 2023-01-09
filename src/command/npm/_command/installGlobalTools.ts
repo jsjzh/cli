@@ -10,8 +10,8 @@ const installGlobalTools = () =>
       const run = runLineCmd();
       await run(`npm install -g ${arr.join(" ")}`);
       arr.forEach(async (tools) => {
-        const versionInfo = await run(`${tools} --version`, false, false);
-        console.log(`${tools} 的版本为：${versionInfo.replace(/\s/, "")}`);
+        const version = await run(`${tools} --version`, false, false);
+        console.log(`${tools} 的版本为：${version.replace(/\s/, "")}`);
       });
     });
 
