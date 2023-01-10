@@ -3,7 +3,7 @@ import { runLineCmd } from "@/util";
 import { createLogger } from "@/util/logger";
 const logger = createLogger({ appName: "NPM_INSTALLGLOBALTOOLS" });
 
-const arr = ["npm", "yarn", "nrm", "http-server", "envinfo", "ts-node"];
+const arr = ["npm", "yarn", "nrm", "http-server", "envinfo", "ts-node", "pm2"];
 
 const installGlobalTools = () =>
   createCommand("installGlobalTools")

@@ -11,24 +11,6 @@ import DailyRotateFile from "winston-daily-rotate-file";
 //   silly: 6
 // };
 
-// errors
-// logstash
-// metadata
-// padLevels
-// simple
-// splat
-// uncolorize
-// colorize
-// combine
-// cli
-// align
-// ms
-// prettyPrint
-// printf
-// timestamp
-// json
-// label
-
 interface ICreateLoggerOption {
   appName: string;
 }
@@ -37,7 +19,7 @@ export const createLogger = (option: ICreateLoggerOption) => {
   return winston.createLogger({
     transports: [
       new DailyRotateFile({
-        level: "error",
+        level: "warn",
         datePattern: "YYYY-MM-DD-HH",
         filename: "%DATE%.log",
         dirname: `logs/${option.appName}`,
@@ -57,11 +39,9 @@ export const createLogger = (option: ICreateLoggerOption) => {
         format: winston.format.combine(
           winston.format.label({ label: option.appName }),
           winston.format.colorize(),
-          // winston.format.align(),
           winston.format.splat(),
           winston.format.ms(),
           winston.format.timestamp(),
-          // winston.format.simple(),
           winston.format.printf(
             (info) =>
               `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`,
