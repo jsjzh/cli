@@ -1,7 +1,7 @@
 import { createCommand } from "commander";
-import createLogger from "@/util/logger";
+import logger from "@/util/logger";
 
-const logger = createLogger();
+// const logger = createLogger({ appName: "DEMO_TEST" });
 
 const test = () =>
   createCommand("test")
@@ -19,7 +19,7 @@ const test = () =>
       logger.log("error", "127.0.0.1 - there's no place like home");
       logger.info("127.0.0.1 - there's no place like home");
       logger.warn("127.0.0.1 - there's no place like home");
-      logger.error("127.0.0.1 - there's no place like home");
+      logger.error(JSON.stringify({ name: "king", age: 18 }));
     });
 
 export default test;

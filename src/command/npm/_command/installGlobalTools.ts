@@ -1,5 +1,7 @@
 import { createCommand } from "commander";
 import { runLineCmd } from "@/util";
+import { createLogger } from "@/util/logger";
+const logger = createLogger({ appName: "NPM_INSTALLGLOBALTOOLS" });
 
 const arr = ["npm", "yarn", "nrm", "http-server", "envinfo", "ts-node"];
 
@@ -11,7 +13,7 @@ const installGlobalTools = () =>
       await run(`npm install -g ${arr.join(" ")}`);
       arr.forEach(async (tools) => {
         const version = await run(`${tools} --version`, false, false);
-        console.log(`${tools} 的版本为：${version.replace(/\s/, "")}`);
+        logger.info(`${tools} 的版本为：${version.replace(/\s/, "")}`);
       });
     });
 

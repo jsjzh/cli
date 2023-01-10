@@ -29,55 +29,49 @@ import DailyRotateFile from "winston-daily-rotate-file";
 // json
 // label
 
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.combine(
-    winston.format.splat(),
-    winston.format.colorize(),
-    winston.format.json(),
-    winston.format.label({ label: "yeah" }),
-    winston.format.ms(),
-    winston.format.timestamp(),
-    // winston.format.simple(),
-    winston.format.printf((info) => {
-      return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
-    }),
-    // myFormat,
-  ),
-  // format: winston.format.combine(
-  //   // winston.format.align(),
-  //   // winston.format.cli(),
-  //   // winston.format.colorize(),
-  //   // winston.format.combine(),
-  //   // winston.format.errors(),
-  //   // winston.format.json(),
-  //   winston.format.label({ label: "hello" }),
-  //   // winston.format.logstash(),
-  //   // winston.format.metadata(),
-  //   // winston.format.ms(),
-  //   // winston.format.padLevels(),
-  //   // winston.format.prettyPrint(),
-  //   // // winston.format.printf(),
-  //   // winston.format.simple(),
-  //   // winston.format.splat(),
-  //   winston.format.timestamp(),
-  //   myFormat,
-  //   // winston.format.uncolorize(),
-  // ),
-  transports: [
-    new winston.transports.Console(),
-    // new DailyRotateFile({
-    //   datePattern: "YYYY-MM-DD-HH",
-    //   filename: "application-%DATE%.log",
-    //   dirname: "logs",
-    //   maxSize: "20m",
-    //   maxFiles: "14d",
-    // }),
-  ],
-});
+interface ICreateLoggerOption {
+  appName: string;
+}
 
-const createLogger = () => {
-  return logger;
+export const createLogger = (option: ICreateLoggerOption) => {
+  return winston.createLogger({
+    transports: [
+      new DailyRotateFile({
+        level: "error",
+        datePattern: "YYYY-MM-DD-HH",
+        filename: "%DATE%.log",
+        dirname: `logs/${option.appName}`,
+        maxSize: "20m",
+        maxFiles: "14d",
+        format: winston.format.combine(
+          winston.format.label({ label: option.appName }),
+          winston.format.uncolorize(),
+          winston.format.splat(),
+          winston.format.ms(),
+          winston.format.timestamp(),
+          winston.format.prettyPrint(),
+        ),
+      }),
+      new winston.transports.Console({
+        level: "info",
+        format: winston.format.combine(
+          winston.format.label({ label: option.appName }),
+          winston.format.colorize(),
+          // winston.format.align(),
+          winston.format.splat(),
+          winston.format.ms(),
+          winston.format.timestamp(),
+          // winston.format.simple(),
+          winston.format.printf(
+            (info) =>
+              `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`,
+          ),
+        ),
+      }),
+    ],
+  });
 };
 
-export default createLogger;
+const logger = createLogger({ appName: "default" });
+
+export default logger;

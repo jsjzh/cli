@@ -1,5 +1,7 @@
 import { createCommand } from "commander";
 import { runLineCmd } from "@/util";
+import { createLogger } from "@/util/logger";
+const logger = createLogger({ appName: "GIT_PUSH" });
 
 const push = () =>
   createCommand("push")
@@ -12,7 +14,7 @@ const push = () =>
       run("git add .");
       run(`git commit -m '${params.message}'`);
       run(`git push origin ${params.branch}`);
-      console.log(
+      logger.info(
         `代码提交成功，提交分支：${params.branch}，提交内容：${params.message}`,
       );
     });

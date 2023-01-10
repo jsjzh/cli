@@ -1,12 +1,11 @@
 import { execSync } from "child_process";
+import logger from "@/util/logger";
 
 export const runLineCmd = (cwd: string = process.cwd()) => {
   return async (cmd: string, showExecuteCmd = true, showStdio = true) => {
     try {
       if (showExecuteCmd) {
-        console.log("");
-        console.log(`将在 ${cwd} 运行指令 ${cmd}`);
-        console.log("");
+        logger.info(`将在 ${cwd} 运行指令 ${cmd}`);
       }
       return execSync(cmd, {
         cwd,

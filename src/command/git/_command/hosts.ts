@@ -2,6 +2,8 @@ import { createCommand } from "commander";
 import { readFileSync, writeFileSync } from "fs";
 import dayjs from "dayjs";
 import api from "@/api";
+import { createLogger } from "@/util/logger";
+const logger = createLogger({ appName: "GIT_HOSTS" });
 
 const hosts = () =>
   createCommand("hosts")
@@ -17,7 +19,7 @@ const hosts = () =>
         str,
       );
       writeFileSync("/etc/hosts", newHosts);
-      console.log("/etc/hosts 更新成功");
+      logger.info("/etc/hosts 更新成功");
     });
 
 export default hosts;

@@ -1,5 +1,7 @@
 import { createCommand } from "commander";
 import { runLineCmd } from "@/util";
+import { createLogger } from "@/util/logger";
+const logger = createLogger({ appName: "GIT_PULL" });
 
 const pull = () =>
   createCommand("pull")
@@ -7,7 +9,7 @@ const pull = () =>
     .action((params) => {
       const run = runLineCmd();
       run("git pull");
-      console.log("git pull 运行成功");
+      logger.info("git pull 运行成功");
     });
 
 export default pull;
