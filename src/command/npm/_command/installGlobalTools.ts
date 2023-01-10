@@ -1,7 +1,7 @@
 import { createCommand } from "commander";
 import { runLineCmd } from "@/util";
 
-const arr = ["npm", "yarn", "nrm", "http-server", "envinfo"];
+const arr = ["npm", "yarn", "nrm", "http-server", "envinfo", "ts-node"];
 
 const installGlobalTools = () =>
   createCommand("installGlobalTools")
