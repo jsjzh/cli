@@ -38,6 +38,8 @@ container 只是将他们串起来的方法，比如一个外层的 container �
 
 如果是多个的，比如 npm 和 npx 还有其他的啥的，是写在一个仓库的，哦，那其实也没事，因为用多入口就好了，然后 bin 那里用 xxx: xxx 来表示即可
 
+哦，还有一点，就是得有一个办法，能够获取到 Container 也就是 Cli 的一些信息，比如 name 或者 version 等等的？真的需要吗？想一想
+
 ```ts
 const cli = new Cli({
   context: {
@@ -49,12 +51,43 @@ const cli = new Cli({
   },
 });
 
-// commands/xxx.ts
-const command = new Cli.Command((props) => {
-  const cron = new props.helper.CronJob("* * * * * *", () => {
-    props.logger.error("hello" + props.context.name);
-  });
+const cli = new Cli({
+  name: "",
+  version: "",
+  desc: "",
+  commands: [],
+  // helpers: [],
+  options: {
+    logger: {},
+  },
 });
 
+cli.execute(process.argv);
+
+// commands/aaa.ts
+const command = new Cli.Command({
+  command: "",
+  desc: "",
+  options: [],
+  commands: [bbb],
+  task(props) {
+    const cron = new props.helper.CronJob("* * * * * *", () => {
+      props.logger.error("hello" + props.context.name);
+    });
+  },
+});
+
+// commands/bbb.ts
+const command = new Cli.Command({
+  command: "",
+  desc: "",
+  options: [],
+  commands: [],
+  task(props) {
+    const cron = new props.helper.CronJob("* * * * * *", () => {
+      props.logger.error("hello" + props.context.name);
+    });
+  },
+});
 export default command;
 ```
