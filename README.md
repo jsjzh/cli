@@ -40,6 +40,12 @@ container 只是将他们串起来的方法，比如一个外层的 container �
 
 哦，还有一点，就是得有一个办法，能够获取到 Container 也就是 Cli 的一些信息，比如 name 或者 version 等等的？真的需要吗？想一想
 
+我发现 logger 有点问题，在哪里运行就会有一大堆 logs 文件，得改改，因为这个可能会和项目本身的 logs 文件冲突
+
+每个 command 的 context 都是不一样的，然后输入的参数，是否要变成 name? 这种，也就是说，不用 options[] 的方法传入
+
+测试案例需要补充
+
 ```ts
 const cli = new Cli({
   context: {
