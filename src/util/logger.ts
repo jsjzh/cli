@@ -1,11 +1,49 @@
 import winston from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 
-// levels
-// error warn info debug
+// const levels = {
+//   error: 0,
+//   warn: 1,
+//   info: 2,
+//   http: 3,
+//   verbose: 4,
+//   debug: 5,
+//   silly: 6
+// };
+
+// errors
+// logstash
+// metadata
+// padLevels
+// simple
+// splat
+// uncolorize
+// colorize
+// combine
+// cli
+// align
+// ms
+// prettyPrint
+// printf
+// timestamp
+// json
+// label
 
 const logger = winston.createLogger({
-  level: "debug",
+  level: "info",
+  format: winston.format.combine(
+    winston.format.splat(),
+    winston.format.colorize(),
+    winston.format.json(),
+    winston.format.label({ label: "yeah" }),
+    winston.format.ms(),
+    winston.format.timestamp(),
+    // winston.format.simple(),
+    winston.format.printf((info) => {
+      return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
+    }),
+    // myFormat,
+  ),
   // format: winston.format.combine(
   //   // winston.format.align(),
   //   // winston.format.cli(),
@@ -13,7 +51,7 @@ const logger = winston.createLogger({
   //   // winston.format.combine(),
   //   // winston.format.errors(),
   //   // winston.format.json(),
-  //   // winston.format.label(),
+  //   winston.format.label({ label: "hello" }),
   //   // winston.format.logstash(),
   //   // winston.format.metadata(),
   //   // winston.format.ms(),
@@ -22,7 +60,8 @@ const logger = winston.createLogger({
   //   // // winston.format.printf(),
   //   // winston.format.simple(),
   //   // winston.format.splat(),
-  //   // winston.format.timestamp(),
+  //   winston.format.timestamp(),
+  //   myFormat,
   //   // winston.format.uncolorize(),
   // ),
   transports: [
@@ -37,8 +76,8 @@ const logger = winston.createLogger({
   ],
 });
 
-// 传输到通道
-// logger.error("error");
-// logger.warn("warn");
-// logger.info("info");
-// logger.debug("debug");
+const createLogger = () => {
+  return logger;
+};
+
+export default createLogger;
