@@ -1,22 +1,37 @@
-import { Command, createCommand } from "commander";
+import { Command } from "commander";
+import CliCommand from "./cliCommand";
+import {
+  createCronJob,
+  createRunCmd,
+  createLogger,
+  createRunTask,
+} from "./shared";
 
 interface CliConfig {
   name: string;
   version: string;
   description: string;
   commands: CliCommand[];
-  context: () => { [k: string]: any };
-  helper: any;
-  // configs: { [k: string]: any };
+  context: () => { [k: keyof any]: any };
+  helper: { [k: keyof any]: any };
+  // configs: { [k: keyof any]: any };
 }
 
-class Cli {
+export default class Cli {
   program: Command;
   baseConfig: CliConfig;
+  helper: {
+    logger: ReturnType<typeof createLogger>;
+    runCmd: ReturnType<typeof createRunCmd>;
+    runTask: ReturnType<typeof createRunTask>;
+    cronJob: ReturnType<typeof createCronJob>;
+    [k: keyof any]: any;
+  };
 
   constructor(config: CliConfig) {
     this.baseConfig = config;
     this.createProgram();
+    this.createHelper();
     this.createCommand();
   }
 
@@ -24,6 +39,18 @@ class Cli {
     this.program = new Command(this.baseConfig.name)
       .version(this.baseConfig.version)
       .description(this.baseConfig.description);
+  }
+
+  createHelper() {
+    const logger = createLogger({ appName: this.baseConfig.name });
+
+    this.helper = {
+      logger,
+      runCmd: createRunCmd(logger),
+      runTask: createRunTask(logger),
+      cronJob: createCronJob(),
+      ...this.baseConfig.helper,
+    };
   }
 
   createCommand() {
@@ -37,62 +64,6 @@ class Cli {
   }
 }
 
-interface Context {}
-
-interface Helper {
-  cron: any;
-  task: any;
-  runLineCmd: any;
-}
-
-interface Logger {}
-
-interface Props {
-  params: { [k: string]: any };
-  context: Context;
-  logger: Logger;
-  helper: Helper;
-}
-
-interface CommandConfig {
-  command: string;
-  description: string;
-  options: [];
-  commands: CliCommand[];
-  context: () => { [k: string]: any };
-  helper: any;
-  // configs: { [k: string]: any };
-  task: (props: Props) => void;
-}
-
-class CliCommand {
-  baseConfig: CommandConfig;
-
-  constructor(config: CommandConfig) {
-    this.baseConfig = config;
-  }
-
-  createCommand(cli: Cli): Command {
-    const program = createCommand(this.baseConfig.command);
-    program.description(this.baseConfig.description);
-    if (this.baseConfig.options.length) {
-      program.option.apply(program, this.baseConfig.options);
-    }
-    program.action((...args) =>
-      this.baseConfig.task({
-        params: args,
-        context: { ...cli.baseConfig.context(), ...this.baseConfig.context() },
-        helper: { ...cli.baseConfig.helper, ...this.baseConfig.helper },
-        logger: cli.baseConfig.helper.logger,
-      }),
-    );
-    if (this.baseConfig.commands.length) {
-      this.baseConfig.commands.forEach((command) => command.createCommand(cli));
-    }
-    return program;
-  }
-}
-
 const command = new CliCommand({
   command: "say",
   description: "say hello",
@@ -102,8 +73,28 @@ const command = new CliCommand({
     return { age: 18 };
   },
   helper: {},
-  task(props) {
-    console.log("hello world");
+  task: async (props) => {
+    props.helper.logger.error("yeah");
+    const run = props.helper.runCmd();
+    await run("echo hello");
+
+    props.helper
+      .runTask({ hasTip: true })
+      .add({
+        title: "test 1",
+        task: async () => {
+          props.helper.logger.error("yeah");
+        },
+      })
+      .add({
+        title: "test 2",
+        task: async () => {
+          await run("echo hello");
+        },
+      })
+      .run();
+
+    console.log(props.context.age);
   },
 });
 
