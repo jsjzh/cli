@@ -61,7 +61,7 @@ div 的底层显示虚幻的名称如何实现
 
 cli git pull 可以修改
 
-我要在统一一个地方，把所有 ? 的值，都变成默认的
+我要在统一一个地方，把所有 ? 的值，都变成默认的，这就叫 normalize
 
 ```shell
 # 三个维度 Command Argument Option
