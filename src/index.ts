@@ -12,20 +12,36 @@ import { createCommand, createArgument, createOption } from "commander";
 //   .addCommand(demo())
 //   .parse(process.argv);
 
+import str from "./demo";
+
 createCommand("cli")
   .version("0.0.1")
   .description("test cli")
   .addCommand(
     createCommand("start")
-      .argument("<dev>", 'argument dev', "master")
-      // .option("")
-      // .addArgument(createArgument("[dev1]"))
-      // .addArgument(createArgument("<dev2>"))
+      .argument("<input-file>", "argument input-file")
+      .argument("[output-file]", "argument output-file", "output-file")
+      .addArgument(
+        createArgument("<drink-size>", "drink cup size")
+          .choices(["small", "medium", "large"])
+          .default("small", "auto choice"),
+        // .argParser((value, pre) => value),
+      )
+      .requiredOption("-n, --name <names...>", "input name")
+      .option("-a, --age <number>", "input name")
+      // .option("-C, --no-cheese", "remove cheese")
+      // .option("-d, --dir <path>", "change the working directory")
+      // .option("-c, --cheese [type]", "add cheese [marble]")
       .action((...args) => {
-        console.log("hello world");
+        const instance = args[args.length - 1];
+        const _opts = args[args.length - 2];
+        const _args = args.slice(0, args.length - 2);
+        console.log("_args", _args);
+        console.log("_opts", _opts);
         // console.log(args);
       }),
   )
+  .usage(str)
   .parse();
 
 // createCommand("cli")

@@ -49,6 +49,16 @@ container 只是将他们串起来的方法，比如一个外层的 container �
 
 用 log 日志记录的工具，给记录到文件里，并且，这个 log 日志记录不仅仅可以用在长时间挂在后台的脚本上，平时的日志也可以记录。
 
+容器可以做的事情，统一增加 command 指令，比如 -q 指令，就是 quiet，意思就是禁止显示信息
+
+Generic options 和 Specific git-branch actions: 的区别
+
+div 的底层显示虚幻的名称如何实现
+
+我也需要整理出来整体的架构，各种东西的架构，就像之前看到的 xm 整理的供应链上下游，个中环节
+
+我应该总结一下，现在公司拥有的能力架构，比如说，大数据是一个趋势，那么是不是大数据、可视化、是一个方向
+
 ```shell
 # 三个维度 Command Argument Option
 # createCommand
