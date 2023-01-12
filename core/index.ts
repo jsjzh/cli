@@ -1,20 +1,20 @@
 import { createCommand } from "commander";
-import type { Command } from "commander";
 import CliCommand from "./cliCommand";
 import {
-  createCronJob,
-  createRunCmd,
   createLogger,
+  createRunCmd,
+  createRunCron,
   createRunTask,
 } from "./shared";
+import type { Command } from "commander";
 
 interface CliConfig {
   name: string;
   version: string;
   description: string;
-  commands: CliCommand[];
-  context: () => { [k: keyof any]: any };
-  helper: { [k: keyof any]: any };
+  commands?: CliCommand[];
+  context?: () => { [k: keyof any]: any };
+  helper?: { [k: keyof any]: any };
   // configs: { [k: keyof any]: any };
 }
 
@@ -24,8 +24,8 @@ export default class Cli {
   helper: {
     logger: ReturnType<typeof createLogger>;
     runCmd: ReturnType<typeof createRunCmd>;
+    runCron: ReturnType<typeof createRunCron>;
     runTask: ReturnType<typeof createRunTask>;
-    cronJob: ReturnType<typeof createCronJob>;
     [k: keyof any]: any;
   };
 
@@ -33,7 +33,7 @@ export default class Cli {
     this.baseConfig = config;
     this.createProgram();
     this.createHelper();
-    this.createCommand();
+    this.registerCliCommand();
   }
 
   createProgram() {
@@ -48,15 +48,15 @@ export default class Cli {
     this.helper = {
       logger,
       runCmd: createRunCmd(logger),
+      runCron: createRunCron(logger),
       runTask: createRunTask(logger),
-      cronJob: createCronJob(),
       ...this.baseConfig.helper,
     };
   }
 
-  createCommand() {
+  registerCliCommand() {
     this.baseConfig.commands.forEach((command) =>
-      this.program.addCommand(command.createCommand(this)),
+      this.program.addCommand(command.registerCommand(this)),
     );
   }
 
@@ -65,49 +65,49 @@ export default class Cli {
   }
 }
 
-const command = new CliCommand({
-  command: "say",
-  description: "say hello",
-  options: [],
-  commands: [],
-  context() {
-    return { age: 18 };
-  },
-  helper: {},
-  task: (props) => {
-    props.helper.logger.error("yeah");
-    const runer = props.helper.runCmd();
-    runer("echo hello");
+// const command = new CliCommand({
+//   command: "say",
+//   description: "say hello",
+//   options: [],
+//   commands: [],
+//   context() {
+//     return { age: 18 };
+//   },
+//   helper: {},
+//   task: (props) => {
+//     props.helper.logger.error("yeah");
+//     const runer = props.helper.runCmd();
+//     runer("echo hello");
 
-    props.helper
-      .runTask({ hasTip: true })
-      .add({
-        title: "test 1",
-        task: async () => {
-          props.helper.logger.error("yeah");
-        },
-      })
-      .add({
-        title: "test 2",
-        task: async () => {
-          runer("echo hello");
-        },
-      })
-      .run();
+//     props.helper
+//       .runTask({ hasTip: true })
+//       .add({
+//         title: "test 1",
+//         task: async () => {
+//           props.helper.logger.error("yeah");
+//         },
+//       })
+//       .add({
+//         title: "test 2",
+//         task: async () => {
+//           runer("echo hello");
+//         },
+//       })
+//       .run();
 
-    console.log(props.context.age);
-  },
-});
+//     console.log(props.context.age);
+//   },
+// });
 
-const cli = new Cli({
-  name: "jzh",
-  description: "hello",
-  version: "0.0.1",
-  commands: [command],
-  helper: {},
-  context() {
-    return { name: "king" };
-  },
-});
+// const cli = new Cli({
+//   name: "jzh",
+//   description: "hello",
+//   version: "0.0.1",
+//   commands: [command],
+//   helper: {},
+//   context() {
+//     return { name: "king" };
+//   },
+// });
 
-cli.execute();
+// cli.execute();

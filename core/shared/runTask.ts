@@ -1,4 +1,4 @@
-import winston from "winston";
+import type { Logger } from "winston";
 
 interface TaskItem {
   title: string;
@@ -14,9 +14,9 @@ interface RunTaskConfig {
 class RunTask {
   tasks: TaskItem[];
   config: RunTaskConfig;
-  logger: winston.Logger;
+  logger: Logger;
 
-  constructor(logger: winston.Logger, config?: RunTaskConfig) {
+  constructor(logger: Logger, config?: RunTaskConfig) {
     this.tasks = [];
     this.logger = logger;
 
@@ -44,7 +44,7 @@ class RunTask {
   }
 }
 
-const createRunTask = (logger: winston.Logger) => (option: RunTaskConfig) =>
+const createRunTask = (logger: Logger) => (option: RunTaskConfig) =>
   new RunTask(logger, option);
 
 export default createRunTask;

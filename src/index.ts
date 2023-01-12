@@ -1,4 +1,5 @@
 import { createCommand, createArgument, createOption } from "commander";
+import type { Command } from "commander";
 // import git from "@/command/git";
 // import npm from "@/command/npm";
 // import demo from "@/command/demo";
@@ -12,36 +13,44 @@ import { createCommand, createArgument, createOption } from "commander";
 //   .addCommand(demo())
 //   .parse(process.argv);
 
-import str from "./demo";
-
 createCommand("cli")
   .version("0.0.1")
   .description("test cli")
   .addCommand(
     createCommand("start")
-      .argument("<input-file>", "argument input-file")
-      .argument("[output-file]", "argument output-file", "output-file")
+      // .argument("<input>", "argument input-file")
+      // .argument("[output]", "argument output-file", "output-file")
       .addArgument(
-        createArgument("<drink-size>", "drink cup size")
+        createArgument("<size>", "drink cup size")
           .choices(["small", "medium", "large"])
           .default("small", "auto choice"),
         // .argParser((value, pre) => value),
       )
-      .requiredOption("-n, --name <names...>", "input name")
-      .option("-a, --age <number>", "input name")
+      .addOption(
+        createOption("-A, --no-age", "input age")
+          .choices(["small", "medium", "large"])
+          .default("small", "auto choice"),
+        // .argParser((value, pre) => value),
+      )
+      // .addOption(
+      //   createOption("-n, --name <name>", "input name").conflicts(["age"]),
+      // )
+      // .requiredOption("-n, --name <names...>", "input name")
+      // .option("-a, --age <age>", "input name")
       // .option("-C, --no-cheese", "remove cheese")
       // .option("-d, --dir <path>", "change the working directory")
       // .option("-c, --cheese [type]", "add cheese [marble]")
       .action((...args) => {
-        const instance = args[args.length - 1];
+        const instance: Command = args[args.length - 1];
         const _opts = args[args.length - 2];
         const _args = args.slice(0, args.length - 2);
         console.log("_args", _args);
         console.log("_opts", _opts);
+        // instance.outputHelp();
         // console.log(args);
       }),
   )
-  .usage(str)
+  // .usage(str)
   .parse();
 
 // createCommand("cli")
@@ -57,12 +66,12 @@ createCommand("cli")
 //   )
 //   .parse();
 
-interface Command {
-  commands: Command[];
-  arguments: Argument[];
-  options: Option[];
-}
+// interface Command {
+//   commands: Command[];
+//   arguments: Argument[];
+//   options: Option[];
+// }
 
-interface Argument {}
+// interface Argument {}
 
-interface Option {}
+// interface Option {}

@@ -1,8 +1,8 @@
-import winston from "winston";
 import { execSync } from "child_process";
+import type { Logger } from "winston";
 
 const createRunCmd =
-  (logger: winston.Logger) =>
+  (logger: Logger) =>
   (cwd: string = process.cwd()) =>
   (cmd: string, showExecuteCmd = true, showStdio = true) => {
     try {

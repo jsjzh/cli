@@ -59,6 +59,10 @@ div 的底层显示虚幻的名称如何实现
 
 我应该总结一下，现在公司拥有的能力架构，比如说，大数据是一个趋势，那么是不是大数据、可视化、是一个方向
 
+cli git pull 可以修改
+
+我要在统一一个地方，把所有 ? 的值，都变成默认的
+
 ```shell
 # 三个维度 Command Argument Option
 # createCommand
