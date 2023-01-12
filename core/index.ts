@@ -1,4 +1,5 @@
-import { Command } from "commander";
+import { createCommand } from "commander";
+import type { Command } from "commander";
 import CliCommand from "./cliCommand";
 import {
   createCronJob,
@@ -36,7 +37,7 @@ export default class Cli {
   }
 
   createProgram() {
-    this.program = new Command(this.baseConfig.name)
+    this.program = createCommand(this.baseConfig.name)
       .version(this.baseConfig.version)
       .description(this.baseConfig.description);
   }
@@ -73,10 +74,10 @@ const command = new CliCommand({
     return { age: 18 };
   },
   helper: {},
-  task: async (props) => {
+  task: (props) => {
     props.helper.logger.error("yeah");
-    const run = props.helper.runCmd();
-    await run("echo hello");
+    const runer = props.helper.runCmd();
+    runer("echo hello");
 
     props.helper
       .runTask({ hasTip: true })
@@ -89,7 +90,7 @@ const command = new CliCommand({
       .add({
         title: "test 2",
         task: async () => {
-          await run("echo hello");
+          runer("echo hello");
         },
       })
       .run();

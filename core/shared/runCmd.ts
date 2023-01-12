@@ -4,7 +4,7 @@ import { execSync } from "child_process";
 const createRunCmd =
   (logger: winston.Logger) =>
   (cwd: string = process.cwd()) =>
-  async (cmd: string, showExecuteCmd = true, showStdio = true) => {
+  (cmd: string, showExecuteCmd = true, showStdio = true) => {
     try {
       if (showExecuteCmd) {
         logger.info(`将在 ${cwd} 运行指令 ${cmd}`);

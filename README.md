@@ -4,9 +4,6 @@
 
 自己常用的一些脚本合集，也会有一些常用的工具，后面可以添加一些脚本，可以自动安装某些工具，替换环境等。
 
-还可以增加一种会自动在后台运行的脚本，可以通过 cron 来控制运行时间，再通过 pm2 来保证服务稳定运行，接着
-用 log 日志记录的工具，给记录到文件里，并且，这个 log 日志记录不仅仅可以用在长时间挂在后台的脚本上，平时的日志也可以记录。
-
 ## 使用
 
 ```shell
@@ -45,6 +42,41 @@ container 只是将他们串起来的方法，比如一个外层的 container �
 每个 command 的 context 都是不一样的，然后输入的参数，是否要变成 name? 这种，也就是说，不用 options[] 的方法传入
 
 测试案例需要补充
+
+还可以增加功能就是可以选择的，就比如运行了指令之后，有 abc 选项
+
+还可以增加一种会自动在后台运行的脚本，可以通过 cron 来控制运行时间，再通过 pm2 来保证服务稳定运行，接着
+
+用 log 日志记录的工具，给记录到文件里，并且，这个 log 日志记录不仅仅可以用在长时间挂在后台的脚本上，平时的日志也可以记录。
+
+```shell
+# 三个维度 Command Argument Option
+# createCommand
+# createOption
+# createArgument
+
+# 两种表达方式
+# cli start dev
+command: cli
+command: start
+argument: dev
+
+command: cli
+command: start
+command: dev
+
+# cli start --dev
+command: cli
+command: start
+option: dev
+
+# 存疑
+# cli start name --dev
+command: cli
+command: start
+argument: name
+option: dev
+```
 
 ```ts
 const cli = new Cli({
@@ -95,5 +127,6 @@ const command = new Cli.Command({
     });
   },
 });
+
 export default command;
 ```
