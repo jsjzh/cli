@@ -181,10 +181,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oishi/cli-core@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@oishi/cli-core/-/cli-core-1.0.5.tgz#030da85dae416e1b359cd27d6647cab5ce9cc3e4"
-  integrity sha512-B/X8ivO4F+ViwwQ22wN61y4lN+Dyn2REkSpTtVjIlkbNtJuS9IGmqxQNRsScxS2putDlgCoTX4iykqr9BwSVRw==
+"@oishi/cli-core@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@oishi/cli-core/-/cli-core-1.0.7.tgz#bd17549105c8a49118dd124f75a2b190bf6bfb23"
+  integrity sha512-uLKkrAmoHHvrRxA68yi2qSSEBCLfPe1qArCbUsN6goWd6+OAVH+9fObohnwmLFkuQvr0Kuo+Z8mUbxt7ybFqFQ==
   dependencies:
     commander "^9.5.0"
     cron "^2.2.0"

@@ -3,7 +3,7 @@ import { CliCommand } from "@oishi/cli-core";
 export default new CliCommand({
   command: "push",
   description: "自动 push 当前分支下的所有内容至远程分支",
-  options: [
+  arguments: [
     {
       name: "-m, --message <message>",
       description: "输入 push 的内容",
@@ -19,7 +19,7 @@ export default new CliCommand({
     ).replace(/\s/g, "");
 
     run("git add .");
-    run(`git commit -m '${props.opts.message}'`);
+    run(`git commit -m '${props.args[0]}'`);
     run(`git push origin ${branch}`);
 
     props.logger.info(
