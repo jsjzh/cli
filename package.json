@@ -22,7 +22,7 @@
     "url": "https://github.com/jsjzh/cli/issues"
   },
   "dependencies": {
-    "@oishi/cli-core": "^1.0.7",
+    "@oishi/cli-core": "^1.0.8",
     "axios": "^1.2.2",
     "dayjs": "^1.11.7"
   },
