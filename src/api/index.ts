@@ -1,3 +1,3 @@
-import * as git from "./git";
+import * as yoqi from "./yoqi";
 
-export default { git };
+export default { yoqi };

@@ -2,7 +2,7 @@ import { CliCommand } from "@oishi/cli-core";
 import installGlobalTools from "./cmd/installGlobalTools";
 import publish from "./cmd/publish";
 
-const npmCommand = new CliCommand({
+export default new CliCommand({
   command: "npm",
   description: "npm 命令合集",
   commands: [installGlobalTools, publish],
@@ -10,5 +10,3 @@ const npmCommand = new CliCommand({
     props.instance.outputHelp();
   },
 });
-
-export default npmCommand;

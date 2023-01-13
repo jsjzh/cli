@@ -3,7 +3,7 @@ import hosts from "./cmd/hosts";
 import pull from "./cmd/pull";
 import push from "./cmd/push";
 
-const gitCommand = new CliCommand({
+export default new CliCommand({
   command: "git",
   description: "git 命令合集",
   commands: [hosts, pull, push],
@@ -11,5 +11,3 @@ const gitCommand = new CliCommand({
     props.instance.outputHelp();
   },
 });
-
-export default gitCommand;

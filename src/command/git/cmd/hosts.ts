@@ -9,7 +9,7 @@ export default new CliCommand({
   async action(props) {
     const reg = /^(# @@_INSERT_START_@@)([\s\S]+)(# @@_INSERT_END_@@)$/gm;
 
-    const hosts = await api.git.hosts();
+    const hosts = await api.yoqi.hosts();
 
     const str = `# @@_INSERT_START_@@\n# ${dayjs().format()}${hosts}# @@_INSERT_END_@@`;
 
