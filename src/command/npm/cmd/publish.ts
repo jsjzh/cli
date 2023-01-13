@@ -1,3 +1,4 @@
+import { createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
 
 interface IOpts {
@@ -38,17 +39,9 @@ export default new CliCommand<IOpts>({
   ],
   async action(props) {
     const run = props.helper.runCmd();
-
-    const oldRegistry = run("npm get registry", "pipe", false).replace(
-      /\s/g,
-      "",
-    );
-
-    const branch = run(
-      "git symbolic-ref --short -q HEAD",
-      "pipe",
-      false,
-    ).replace(/\s/g, "");
+    const tools = createRunTools(run);
+    const oldRegistry = tools.getRegistry();
+    const branch = tools.getBranch();
 
     await props.helper
       .runTask({ hasTip: true })

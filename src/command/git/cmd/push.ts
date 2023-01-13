@@ -1,3 +1,4 @@
+import { createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
 
 export default new CliCommand({
@@ -11,12 +12,8 @@ export default new CliCommand({
   ],
   action(props) {
     const run = props.helper.runCmd();
-
-    const branch = run(
-      "git symbolic-ref --short -q HEAD",
-      "pipe",
-      false,
-    ).replace(/\s/g, "");
+    const tools = createRunTools(run);
+    const branch = tools.getBranch();
 
     run("git add .");
     run(`git commit -m '${props.args[0]}'`);
