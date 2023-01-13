@@ -1,22 +1,11 @@
 import { CliCommand } from "@oishi/cli-core";
 
-// npm publish
-// ↓↓↓↓↓
-// nrm use npm
-// git add .
-// git commit -m ""
-// npm run build
-// npm version patch
-// npm publish
-// git push origin master
-// nrm use souche
-
 export default new CliCommand({
   command: "publish",
-  description: `发布 npm 至 registry.npmjs.org`,
+  description: `自动构建并发布 npm，自动提交至 github`,
   arguments: [
     {
-      name: "-m, --message <message>",
+      name: "<message>",
       description: "输入 push 的内容",
     },
   ],
@@ -28,9 +17,17 @@ export default new CliCommand({
     },
     {
       name: "-c, --version <version>",
-      description: "输入要发布的版本升级方式",
+      description: "输入发布时的版本升级方式",
       selects: ["major", "minor", "patch", "premajor", "preminor", "prepatch"],
       default: ["patch", "默认升级方式为：patch"],
+    },
+    {
+      name: "-r, --registry <registry>",
+      description: "输入要发布的 registry",
+      default: [
+        "https://registry.npmjs.org/",
+        "默认发布到 npm：https://registry.npmjs.org/",
+      ],
     },
   ],
   async action(props) {
@@ -50,9 +47,9 @@ export default new CliCommand({
     await props.helper
       .runTask({ hasTip: true })
       .add({
-        title: "切换 registry 至 npm",
+        title: "切换 registry",
         async task() {
-          run("npm set registry=https://registry.npmjs.org/");
+          run(`npm set registry=${props.opts.registry}`);
         },
       })
       .add({

@@ -5,7 +5,7 @@ export default new CliCommand({
   description: "自动 push 当前分支下的所有内容至远程分支",
   arguments: [
     {
-      name: "-m, --message <message>",
+      name: "<message>",
       description: "输入 push 的内容",
     },
   ],
