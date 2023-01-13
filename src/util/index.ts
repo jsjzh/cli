@@ -7,17 +7,17 @@ export const createRunTools = (
     showExecuteCmd?: boolean | undefined,
   ) => string,
 ) => {
-  const getOutPut = (cmd: string) =>
+  const getOutput = (cmd: string) =>
     run(cmd, "pipe", false).replace(/[\f\n\r\t\v]/g, "");
 
-  const getRegistry = () => getOutPut("npm get registry");
+  const getRegistry = () => getOutput("npm get registry");
 
-  const getBranch = () => getOutPut("git symbolic-ref --short -q HEAD");
+  const getBranch = () => getOutput("git symbolic-ref --short -q HEAD");
 
-  const getVersion = (tools: string) => getOutPut(`${tools} --version`);
+  const getVersion = (tools: string) => getOutput(`${tools} --version`);
 
   return {
-    getOutPut,
+    getOutput,
     getRegistry,
     getBranch,
     getVersion,
