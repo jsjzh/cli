@@ -10,7 +10,6 @@
   },
   "scripts": {
     "build:cli": "esbuild src/index.ts --bundle --minify --watch --platform=node --target=node10 --color=true --alias:@=src --outfile=dist/index.js",
-    "build:core": "esbuild core/index.ts --bundle --minify --platform=node --target=node10 --color=true --alias:@=core --outfile=dist/index.js",
     "build:js": "node build/index.js",
     "build": "npm run build:cli"
   },
@@ -23,21 +22,17 @@
     "url": "https://github.com/jsjzh/cli/issues"
   },
   "dependencies": {
+    "@oishi/cli-core": "^1.0.5",
     "axios": "^1.2.2",
-    "commander": "^9.4.1",
-    "cron": "^2.2.0",
-    "dayjs": "^1.11.7",
-    "winston": "^3.8.2",
-    "winston-daily-rotate-file": "^4.7.1"
+    "dayjs": "^1.11.7"
   },
   "devDependencies": {
-    "@types/cron": "^2.0.0",
     "@types/node": "^18.11.18",
-    "@typescript-eslint/eslint-plugin": "^5.48.0",
-    "@typescript-eslint/parser": "^5.48.0",
-    "esbuild": "^0.16.14",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "esbuild": "^0.16.17",
     "eslint": "^8.31.0",
-    "eslint-config-alloy": "^4.8.0",
+    "eslint-config-alloy": "^4.9.0",
     "typescript": "^4.9.4"
   }
 }
