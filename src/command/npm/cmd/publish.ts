@@ -1,6 +1,12 @@
 import { CliCommand } from "@oishi/cli-core";
 
-export default new CliCommand({
+interface IOpts {
+  buildCmd: string;
+  version: string;
+  registry: string;
+}
+
+export default new CliCommand<IOpts>({
   command: "publish",
   description: `自动构建并发布 npm，自动提交至 github`,
   arguments: [
@@ -62,13 +68,13 @@ export default new CliCommand({
       .add({
         title: "执行项目构建",
         async task() {
-          run(props.opts.buildCmd);
+          run(props.opts.buildCmd!);
         },
       })
       .add({
         title: "执行版本升级",
         async task() {
-          run(`npm version ${props.opts.version}`);
+          run(`npm version ${props.opts.version!}`);
         },
       })
       .add({
