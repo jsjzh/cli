@@ -20,7 +20,7 @@ interface CliConfig {
 
 export default class Cli {
   program: Command;
-  baseConfig: CliConfig;
+  baseConfig: Required<CliConfig>;
   helper: {
     logger: ReturnType<typeof createLogger>;
     runCmd: ReturnType<typeof createRunCmd>;
@@ -30,10 +30,21 @@ export default class Cli {
   };
 
   constructor(config: CliConfig) {
-    this.baseConfig = config;
+    this.baseConfig = this.normalizeConfig(config);
     this.createProgram();
     this.createHelper();
     this.registerCliCommand();
+  }
+
+  normalizeConfig(config: CliConfig) {
+    return {
+      name: config.name,
+      version: config.version,
+      description: config.description,
+      commands: config.commands || [],
+      context: config.context || (() => ({})),
+      helper: config.helper || {},
+    };
   }
 
   createProgram() {
@@ -64,50 +75,3 @@ export default class Cli {
     this.program.parse();
   }
 }
-
-// const command = new CliCommand({
-//   command: "say",
-//   description: "say hello",
-//   options: [],
-//   commands: [],
-//   context() {
-//     return { age: 18 };
-//   },
-//   helper: {},
-//   task: (props) => {
-//     props.helper.logger.error("yeah");
-//     const runer = props.helper.runCmd();
-//     runer("echo hello");
-
-//     props.helper
-//       .runTask({ hasTip: true })
-//       .add({
-//         title: "test 1",
-//         task: async () => {
-//           props.helper.logger.error("yeah");
-//         },
-//       })
-//       .add({
-//         title: "test 2",
-//         task: async () => {
-//           runer("echo hello");
-//         },
-//       })
-//       .run();
-
-//     console.log(props.context.age);
-//   },
-// });
-
-// const cli = new Cli({
-//   name: "jzh",
-//   description: "hello",
-//   version: "0.0.1",
-//   commands: [command],
-//   helper: {},
-//   context() {
-//     return { name: "king" };
-//   },
-// });
-
-// cli.execute();

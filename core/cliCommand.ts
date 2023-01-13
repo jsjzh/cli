@@ -10,18 +10,18 @@ import type Cli from "./index";
 
 interface CliCommandConfig {
   command: string;
-  description?: string;
+  description: string;
   arguments?: {
     name: string;
-    description?: string;
+    description: string;
     selects?: string[];
-    default?: [string, string];
+    default?: [any, string];
   }[];
   options?: {
     name: string;
-    description?: string;
+    description: string;
     selects?: string[];
-    default?: [string, string];
+    default?: [any, string];
   }[];
   commands?: CliCommand[];
   context?: () => { [k: keyof any]: any };
@@ -43,69 +43,69 @@ interface CliCommandConfig {
 }
 
 export default class CliCommand {
-  baseConfig: CliCommandConfig;
+  baseConfig: Required<CliCommandConfig>;
 
   constructor(config: CliCommandConfig) {
-    this.baseConfig = config;
+    this.baseConfig = this.normalizeConfig(config);
+  }
+
+  normalizeConfig(config: CliCommandConfig) {
+    return {
+      command: config.command,
+      description: config.description,
+      arguments: config.arguments || [],
+      options: config.options || [],
+      commands: config.commands || [],
+      context: config.context || (() => ({})),
+      helper: config.helper || {},
+      task: config.task || (() => {}),
+    };
   }
 
   registerCommand(cli: Cli) {
     const childProgram = createCommand(this.baseConfig.command);
-    childProgram.description(this.baseConfig.description || "");
+    childProgram.description(this.baseConfig.description);
 
-    if (this.baseConfig.arguments?.length) {
-      const commandArguments = this.baseConfig.arguments.map((arg) => {
-        const argument = createArgument(arg.name, arg.description || "");
+    const commandArguments = this.baseConfig.arguments.map((arg) => {
+      const argument = createArgument(arg.name, arg.description);
 
-        return argument
-          .choices(arg.selects || [])
-          .default.apply(argument, arg.default || []);
+      return argument
+        .choices(arg.selects || [])
+        .default.apply(argument, arg.default || []);
+    });
+
+    commandArguments.forEach((commandArgument) =>
+      childProgram.addArgument(commandArgument),
+    );
+
+    const commandOptions = this.baseConfig.options.map((opt) => {
+      const option = createOption(opt.name, opt.description);
+
+      return option
+        .choices(opt.selects || [])
+        .default.apply(option, opt.default || []);
+    });
+
+    commandOptions.forEach((commandOption) =>
+      childProgram.addOption(commandOption),
+    );
+
+    childProgram.action((...args) => {
+      const instance: Command = args[args.length - 1];
+      const _opts = args[args.length - 2];
+      const _args = args.slice(0, args.length - 2);
+
+      this.baseConfig.task!({
+        args: _args,
+        opts: _opts,
+        context: { ...cli.baseConfig.context(), ...this.baseConfig.context() },
+        helper: { ...cli.helper, ...this.baseConfig.helper },
+        logger: cli.helper.logger,
+        instance,
       });
+    });
 
-      commandArguments.forEach((commandArgument) =>
-        childProgram.addArgument(commandArgument),
-      );
-    }
-
-    if (this.baseConfig.options?.length) {
-      const commandOptions = this.baseConfig.options.map((opt) => {
-        const option = createOption(opt.name, opt.description || "");
-
-        return option
-          .choices(opt.selects || [])
-          .default.apply(option, opt.default || []);
-      });
-
-      commandOptions.forEach((commandOption) =>
-        childProgram.addOption(commandOption),
-      );
-    }
-
-    if (this.baseConfig.task) {
-      childProgram.action((...args) => {
-        const instance: Command = args[args.length - 1];
-        const _opts = args[args.length - 2];
-        const _args = args.slice(0, args.length - 2);
-
-        this.baseConfig.task!({
-          args: _args,
-          opts: _opts,
-          context: {
-            ...((cli.baseConfig.context && cli.baseConfig.context()) || {}),
-            ...((this.baseConfig.context && this.baseConfig.context()) || {}),
-          },
-          helper: { ...cli.helper, ...(this.baseConfig.helper || {}) },
-          logger: cli.helper.logger,
-          instance,
-        });
-      });
-    }
-
-    if (this.baseConfig.commands?.length) {
-      this.baseConfig.commands.forEach((command) =>
-        command.registerCommand(cli),
-      );
-    }
+    this.baseConfig.commands.forEach((command) => command.registerCommand(cli));
 
     return childProgram;
   }
