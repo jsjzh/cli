@@ -7,8 +7,6 @@ export default new CliCommand({
   command: "hosts",
   description: "自动更新 hosts，需要有 /etc/hosts 的写入权限",
   action(props) {
-    props.logger.info("/etc/hosts 更新成功");
-
     const job = props.helper.runCron({
       cronTime: "0 0 11 * * *",
       async onTick() {
@@ -29,6 +27,8 @@ export default new CliCommand({
           const newHosts = oldHosts.replace(reg, str);
           writeFileSync("/etc/hosts", newHosts);
         }
+
+        props.logger.info("/etc/hosts 更新成功");
       },
     });
 
