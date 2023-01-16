@@ -9,10 +9,19 @@ export default new CliCommand({
   action(props) {
     const run = props.helper.runCmd();
     const tools = createRunTools(run);
+
+    const oldVersions = arr.map((_tools) => tools.getVersion(_tools));
+
     run(`npm install -g ${arr.join(" ")}`);
-    arr.forEach((_tools) => {
-      const version = tools.getVersion(_tools);
-      props.logger.info(`${_tools} 的版本为：${version.replace(/\s/, "")}`);
-    });
+
+    const newVersions = arr.map((_tools) => tools.getVersion(_tools));
+
+    props.logger.info(
+      `${arr.join(", ")} 的旧版本为：${oldVersions.join(", ")}`,
+    );
+
+    props.logger.info(
+      `${arr.join(", ")} 的新版本为：${newVersions.join(", ")}`,
+    );
   },
 });
