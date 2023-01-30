@@ -1,27 +1,39 @@
 import { createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
 
-const arr = ["npm", "yarn", "nrm", "http-server", "envinfo", "ts-node", "pm2"];
+const arr = [
+  ["npm", "npm"],
+  ["yarn", "yarn"],
+  ["nrm", "nrm"],
+  ["http-server", "http-server"],
+  ["envinfo", "envinfo"],
+  ["ts-node", "ts-node"],
+  ["pm2", "pm2"],
+  ["typescript", "tsc"],
+];
+
+const deps = arr.map((item) => item[0]);
+const clis = arr.map((item) => item[1]);
 
 export default new CliCommand({
   command: "installGlobalTools",
-  description: `自动全局安装最新的常用的工具，${arr.join(", ")}`,
+  description: `自动全局安装最新的常用的工具，${deps.join(", ")}`,
   action(props) {
     const run = props.helper.runCmd();
     const tools = createRunTools(run);
 
-    const oldVersions = arr.map((_tools) => tools.getVersion(_tools));
+    const oldVersions = clis.map((cli) => tools.getVersion(cli));
 
-    run(`npm install -g ${arr.join(" ")}`);
+    run(`npm install -g ${deps.join(" ")}`);
 
-    const newVersions = arr.map((_tools) => tools.getVersion(_tools));
+    const newVersions = clis.map((cli) => tools.getVersion(cli));
 
     props.logger.info(
-      `${arr.join(", ")} 的旧版本为：${oldVersions.join(", ")}`,
+      `${deps.join(", ")} 的旧版本为：${oldVersions.join(", ")}`,
     );
 
     props.logger.info(
-      `${arr.join(", ")} 的新版本为：${newVersions.join(", ")}`,
+      `${deps.join(", ")} 的新版本为：${newVersions.join(", ")}`,
     );
   },
 });
