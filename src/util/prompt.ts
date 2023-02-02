@@ -179,14 +179,12 @@ export class Prompt {
   }
 
   execute(callback?: (value: Answers) => void) {
-    if (this.__validate()) {
-      console.log("TODO");
-    }
+    // if (!this.__validate()) {}
     return this.promptModule(this.prompts).then(callback);
   }
 
-  __validate() {
-    const names = this.prompts.map((prompt) => prompt.name);
-    return names.length === [...new Set(names)].length;
-  }
+  // __validate() {
+  //   const names = this.prompts.map((prompt) => prompt.name);
+  //   return names.length === [...new Set(names)].length;
+  // }
 }
