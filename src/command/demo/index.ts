@@ -6,6 +6,12 @@ const initialAnswers = { name: "jinzhehao" };
 export default new CliCommand({
   command: "demo",
   description: "测试指令",
+  // arguments: [
+  //   {
+  //     name: "<message>",
+  //     description: "message",
+  //   },
+  // ],
   options: [
     {
       name: "-b, --no-buildCmd",
