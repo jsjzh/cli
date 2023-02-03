@@ -20,21 +20,18 @@ export default new CliCommand<IOpts>({
     {
       name: "-b, --buildCmd <buildCmd>",
       description: "输入构建指令",
-      default: ["npm run build", "默认构建指令为：npm run build"],
+      default: ["npm run build", "npm run build"],
     },
     {
       name: "-c, --version <version>",
       description: "输入发布时的版本升级方式",
       selects: ["major", "minor", "patch", "premajor", "preminor", "prepatch"],
-      default: ["patch", "默认升级方式为：patch"],
+      default: ["patch", "patch"],
     },
     {
       name: "-r, --registry <registry>",
       description: "输入要发布的 registry",
-      default: [
-        "https://registry.npmjs.org/",
-        "默认发布到 npm：https://registry.npmjs.org/",
-      ],
+      default: ["https://registry.npmjs.org/", "https://registry.npmjs.org/"],
     },
   ],
   async action(props) {
