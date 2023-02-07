@@ -181,10 +181,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oishi/cli-core@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@oishi/cli-core/-/cli-core-2.0.0.tgz#fb35608766eaa33d593b651b3bf5bfc5a17e4452"
-  integrity sha512-JmcUhI7wKEWAvyuu7SWuSkRDnTsOEz/HRH9A6aWWzP6WjOQir3BufNpWlYu8CEwhMdO1dllBB1qELpF4neC4QA==
+"@oishi/cli-core@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@oishi/cli-core/-/cli-core-2.0.2.tgz#224d4f10b19af339d9eeba6d70d2830fd29aa51a"
+  integrity sha512-SSroQtmwt5ajmqvhNj0VNmQAVF5c4o0ErclWX7jqoteLEUTdTpOhqc965fg1YvM4uZacaz3WVz4tdOk2BzZf3A==
   dependencies:
     "@types/cron" "^2.0.0"
     "@types/inquirer" "^9.0.3"
