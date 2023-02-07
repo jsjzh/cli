@@ -4,6 +4,7 @@ import { CliCommand } from "@oishi/cli-core";
 const arr = [
   ["npm", "npm"],
   ["yarn", "yarn"],
+  ["pnpm", "pnpm"],
   ["nrm", "nrm"],
   ["http-server", "http-server"],
   ["envinfo", "envinfo"],
