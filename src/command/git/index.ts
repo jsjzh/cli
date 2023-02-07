@@ -7,7 +7,4 @@ export default new CliCommand({
   command: "git",
   description: "git 命令合集",
   commands: [hosts, pull, push],
-  action(props) {
-    props.instance.outputHelp();
-  },
 });
