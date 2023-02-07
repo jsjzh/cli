@@ -1,6 +1,16 @@
 import { CliCommand } from "@oishi/cli-core";
 
-export default new CliCommand({
+interface IArgs {
+  name: string;
+  age: string;
+}
+
+interface IOpts {
+  names: string;
+  ages: string;
+}
+
+export default new CliCommand<IArgs, IOpts>({
   command: "demo",
   description: "测试指令",
   arguments: {

@@ -1,39 +1,37 @@
 import { createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
 
+interface IArgs {
+  message: string;
+}
+
 interface IOpts {
   buildCmd: string;
   version: string;
   registry: string;
 }
 
-export default new CliCommand<IOpts>({
+export default new CliCommand<IArgs, IOpts>({
   command: "publish",
   description: `自动构建并发布 npm，自动提交至 github`,
-  arguments: [
-    {
-      name: "<message>",
-      description: "输入 push 的内容",
-    },
-  ],
-  options: [
-    {
-      name: "-b, --buildCmd <buildCmd>",
+  arguments: {
+    message: { description: "输入 git push 的内容" },
+  },
+  options: {
+    buildCmd: {
       description: "输入构建指令",
-      default: ["npm run build", "npm run build"],
+      default: "npm run build",
     },
-    {
-      name: "-c, --version <version>",
+    version: {
       description: "输入发布时的版本升级方式",
-      selects: ["major", "minor", "patch", "premajor", "preminor", "prepatch"],
-      default: ["patch", "patch"],
+      default: "patch",
+      choices: ["major", "minor", "patch", "premajor", "preminor", "prepatch"],
     },
-    {
-      name: "-r, --registry <registry>",
+    registry: {
       description: "输入要发布的 registry",
-      default: ["https://registry.npmjs.org/", "https://registry.npmjs.org/"],
+      default: "https://registry.npmjs.org/",
     },
-  ],
+  },
   async action(props) {
     const run = props.helper.runCmd();
     const tools = createRunTools(run);
@@ -45,26 +43,26 @@ export default new CliCommand<IOpts>({
       .add({
         title: "切换 registry",
         async task() {
-          run(`npm set registry=${props.opts.registry}`);
+          run(`npm set registry=${props.data.registry}`);
         },
       })
       .add({
         title: "将变更提交到 git 缓存区",
         async task() {
           run("git add .");
-          run(`git commit -m '${props.args[0]}'`);
+          run(`git commit -m '${props.data.message}'`);
         },
       })
       .add({
         title: "执行项目构建",
         async task() {
-          run(props.opts.buildCmd!);
+          run(props.data.buildCmd);
         },
       })
       .add({
         title: "执行版本升级",
         async task() {
-          run(`npm version ${props.opts.version!}`);
+          run(`npm version ${props.data.version}`);
         },
       })
       .add({

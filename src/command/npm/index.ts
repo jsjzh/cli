@@ -6,7 +6,4 @@ export default new CliCommand({
   command: "npm",
   description: "npm 命令合集",
   commands: [installGlobalTools, publish],
-  action(props) {
-    props.instance.outputHelp();
-  },
 });
