@@ -9,7 +9,13 @@ interface IOpts {
   buildCmd: string;
   version: string;
   registry: string;
+  user: string;
 }
+
+const users = {
+  jsjzh: { email: "kimimi_king@163.com" },
+  jinzhehao: { email: "jinzhehao@souche.com" },
+};
 
 export default new CliCommand<IArgs, IOpts>({
   command: "publish",
@@ -31,6 +37,11 @@ export default new CliCommand<IArgs, IOpts>({
       description: "输入要发布的 registry",
       default: "https://registry.npmjs.org/",
     },
+    user: {
+      description: "选择要提交的用户",
+      choices: ["jinzhehao", "jsjzh"],
+      default: ["jinzhehao"],
+    },
   },
   async action(props) {
     const run = props.helper.runCmd();
@@ -49,6 +60,13 @@ export default new CliCommand<IArgs, IOpts>({
       .add({
         title: "将变更提交到 git 缓存区",
         async task() {
+          run(`git config --local user.name "${props.data.user}"`);
+          run(
+            `git config --local user.email "${
+              users[props.data.user as keyof typeof users].email
+            }"`,
+          );
+
           run("git add .");
           run(`git commit -m '${props.data.message}'`);
         },
