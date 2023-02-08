@@ -5,7 +5,14 @@ interface IArgs {
   message: string;
 }
 
-interface IOpts {}
+interface IOpts {
+  user: string;
+}
+
+const users = {
+  jsjzh: { email: "kimimi_king@163.com" },
+  jinzhehao: { email: "jinzhehao@souche.com" },
+};
 
 export default new CliCommand<IArgs, IOpts>({
   command: "push",
@@ -13,10 +20,25 @@ export default new CliCommand<IArgs, IOpts>({
   arguments: {
     message: { description: "输入 push 的内容" },
   },
+  options: {
+    user: {
+      description: "选择要提交的用户",
+      choices: ["jinzhehao", "jsjzh"],
+      default: ["jinzhehao"],
+    },
+  },
   action(props) {
     const run = props.helper.runCmd();
     const tools = createRunTools(run);
     const branch = tools.getBranch();
+
+    run(`git config --local user.name "${props.data.user}"`);
+
+    run(
+      `git config --local user.email "${
+        users[props.data.user as keyof typeof users]
+      }"`,
+    );
 
     run("git add .");
     run(`git commit -m '${props.data.message}'`);
