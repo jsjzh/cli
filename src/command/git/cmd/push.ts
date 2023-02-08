@@ -3,15 +3,15 @@ import { CliCommand } from "@oishi/cli-core";
 
 // feat: 新功能、新特性
 // fix: 修改 bug
-// perf: 更改代码，以提高性能（在不影响代码内部行为的前提下，对程序性能进行优化）
-// refactor: 代码重构（重构，在不影响代码内部行为、功能下的代码修改）
+// perf: 更改代码，以提高性能
+// refactor: 代码重构
 // docs: 文档修改
-// style: 代码格式修改, 注意不是 css 修改（例如分号修改）
+// style: 代码格式修改
 // test: 测试用例新增、修改
 // build: 影响项目构建或依赖项修改
 // revert: 恢复上一次提交
 // ci: 持续集成相关文件修改
-// chore: 其他修改（不在上述类型中的修改）
+// chore: 其他修改
 // release: 发布新版本
 // workflow: 工作流相关文件修改
 
@@ -36,29 +36,29 @@ export default new CliCommand<IArgs, IOpts>({
     message: { description: "输入 push 的内容" },
   },
   options: {
+    type: {
+      description: "选择此次发布的内容类型",
+      choices: [
+        "feat: 新功能、新特性",
+        "fix: 修改 bug",
+        "perf: 更改代码，以提高性能",
+        "refactor: 代码重构",
+        "docs: 文档修改",
+        "style: 代码格式修改",
+        "test: 测试用例新增、修改",
+        "build: 影响项目构建或依赖项修改",
+        "revert: 恢复上一次提交",
+        "ci: 持续集成相关文件修改",
+        "chore: 其他修改",
+        "release: 发布新版本",
+        "workflow: 工作流相关文件修改",
+      ],
+      default: "chore",
+    },
     user: {
       description: "选择要提交的用户",
       choices: ["jinzhehao", "jsjzh"],
       default: "jinzhehao",
-    },
-    type: {
-      description: "选择此次发布的内容类型",
-      choices: [
-        "feat",
-        "fix",
-        "perf",
-        "refactor",
-        "docs",
-        "style",
-        "test",
-        "build",
-        "revert",
-        "ci",
-        "chore",
-        "release",
-        "workflow",
-      ],
-      default: "chore",
     },
   },
   action(props) {
@@ -74,8 +74,10 @@ export default new CliCommand<IArgs, IOpts>({
       }"`,
     );
 
+    const type = props.data.type?.split(": ")[0] || "chore";
+
     run("git add .");
-    run(`git commit -m '${props.data.type}: ${props.data.message}'`);
+    run(`git commit -m '${type}: ${props.data.message}'`);
     run(`git push origin ${branch}`);
 
     props.logger.info(
