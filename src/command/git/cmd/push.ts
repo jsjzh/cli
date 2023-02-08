@@ -36,7 +36,7 @@ export default new CliCommand<IArgs, IOpts>({
 
     run(
       `git config --local user.email "${
-        users[props.data.user as keyof typeof users]
+        users[props.data.user as keyof typeof users].email
       }"`,
     );
 
