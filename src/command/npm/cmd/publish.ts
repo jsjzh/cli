@@ -21,18 +21,15 @@ export default new CliCommand<IArgs, IOpts>({
     buildCmd: {
       description: "输入构建指令",
       default: "npm run build",
-      optional: true,
     },
     version: {
       description: "输入发布时的版本升级方式",
       default: "patch",
       choices: ["major", "minor", "patch", "premajor", "preminor", "prepatch"],
-      optional: true,
     },
     registry: {
       description: "输入要发布的 registry",
       default: "https://registry.npmjs.org/",
-      optional: true,
     },
   },
   async action(props) {
@@ -59,7 +56,7 @@ export default new CliCommand<IArgs, IOpts>({
       .add({
         title: "执行项目构建",
         async task() {
-          run(props.data.buildCmd);
+          run(props.data.buildCmd!);
         },
       })
       .add({

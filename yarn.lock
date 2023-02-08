@@ -181,14 +181,14 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oishi/cli-core@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@oishi/cli-core/-/cli-core-2.0.3.tgz#840582785d84787e01b08a86b61c5ad87ffb60c8"
-  integrity sha512-9ySJrmGmh2f1QYd/f1lIgWbGOw53kzCEHYkk9EO5oqX6Xt+tGbI+kbTNfeXAw5jEifYUmsOOwmByI2Qt7c1iHw==
+"@oishi/cli-core@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@oishi/cli-core/-/cli-core-2.0.4.tgz#a8af32d431de9624db8df6cc5556b1bfabcb8c59"
+  integrity sha512-tM+8g3x3B13LTlo0WgOmu/4GyxUeCKYyzTSuC6N0jZ5U27PiaePP+aL8MEie3PDvMeN2dkGGpMHmOzToCE8xGQ==
   dependencies:
     "@types/cron" "^2.0.0"
     "@types/inquirer" "^9.0.3"
-    "@types/node" "^18.11.19"
+    "@types/node" "^18.13.0"
     commander "^10.0.0"
     cron "^2.2.0"
     inquirer "^9.1.4"
@@ -241,11 +241,6 @@
   version "18.11.18"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.11.18.tgz"
   integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
-
-"@types/node@^18.11.19":
-  version "18.11.19"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.19.tgz#35e26df9ec441ab99d73e99e9aca82935eea216d"
-  integrity sha512-YUgMWAQBWLObABqrvx8qKO1enAvBUdjZOAWQ5grBAkp5LQv45jBvYKZ3oFS9iKRCQyFjqw6iuEa1vmFqtxYLZw==
 
 "@types/node@^18.13.0":
   version "18.13.0"
