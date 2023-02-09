@@ -57,11 +57,16 @@ export const createRunTools = (
     : npmLockPath;
 
   const pnpmAdd = (dep: string) => run(`pnpm install ${dep}`);
-  const pnpmAddDev = (dep: string) => run(`pnpm install ${dep} -D`);
   const yarnAdd = (dep: string) => run(`yarn add ${dep}`);
-  const yarnAddDev = (dep: string) => run(`yarn add ${dep} -D`);
   const npmAdd = (dep: string) => run(`npm install ${dep}`);
+
+  const pnpmAddDev = (dep: string) => run(`pnpm install ${dep} -D`);
+  const yarnAddDev = (dep: string) => run(`yarn add ${dep} -D`);
   const npmAddDev = (dep: string) => run(`npm install ${dep} -D`);
+
+  const pnpmUpdate = (dep: string) => run(`pnpm update ${dep}`);
+  const yarnUpdate = (dep: string) => run(`yarn upgrade ${dep}`);
+  const npmUpdate = (dep: string) => run(`npm update ${dep}`);
 
   return {
     getOutput,
@@ -71,6 +76,7 @@ export const createRunTools = (
 
     add: hasPnpmLock ? pnpmAdd : hasYarnLock ? yarnAdd : npmAdd,
     addDev: hasPnpmLock ? pnpmAddDev : hasYarnLock ? yarnAddDev : npmAddDev,
+    update: hasPnpmLock ? pnpmUpdate : hasYarnLock ? yarnUpdate : npmUpdate,
 
     config: {
       use,

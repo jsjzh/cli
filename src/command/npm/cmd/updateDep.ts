@@ -32,12 +32,12 @@ export default new CliCommand<IArgs, IOpts>({
     const devDeps = Object.keys(packageLockJson.devDependencies || {});
 
     if (props.data.type === "dep") {
-      tools.add(deps.join(" "));
+      tools.update(deps.join(" "));
     } else if (props.data.type === "devDep") {
-      tools.addDev(devDeps.join(" "));
+      tools.update(devDeps.join(" "));
     } else if (props.data.type === "all") {
-      tools.add(deps.join(" "));
-      tools.addDev(devDeps.join(" "));
+      tools.update(deps.join(" "));
+      tools.update(devDeps.join(" "));
     }
   },
 });
