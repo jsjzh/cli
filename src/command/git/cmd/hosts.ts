@@ -11,14 +11,18 @@ export default new CliCommand({
       /^(# @@_INSERT_GIT_HOST_START_@@)([\s\S]+)(# @@_INSERT_GIT_HOST_END_@@)$/gm;
 
     let hosts = "";
+    let target = "";
 
     try {
+      target = "updateGitHubDNSFromYoqi";
       hosts = await api.updateGitHubDNSFromYoqi();
     } catch (error) {
       try {
+        target = "updateGitHubDNSFromGitee";
         hosts = await api.updateGitHubDNSFromGitee();
       } catch (error) {
         try {
+          target = "updateGitHubDNSFromGitLab";
           hosts = await api.updateGitHubDNSFromGitLab();
         } catch (error) {
           const msg = "更新 github DNS 的三个源全部失效，请重新获取";
@@ -31,6 +35,8 @@ export default new CliCommand({
     const str = `# @@_INSERT_GIT_HOST_START_@@\n# ${dayjs().format()}${hosts}# @@_INSERT_GIT_HOST_END_@@`;
 
     const oldHosts = readFileSync("/etc/hosts", { encoding: "utf-8" });
+
+    props.logger.info(`从 ${target} 获取到 hosts`);
 
     if (!reg.test(oldHosts)) {
       props.logger.info("未发现插入 flag，insert hosts");
