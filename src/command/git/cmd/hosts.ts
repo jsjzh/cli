@@ -10,7 +10,23 @@ export default new CliCommand({
     const reg =
       /^(# @@_INSERT_GIT_HOST_START_@@)([\s\S]+)(# @@_INSERT_GIT_HOST_END_@@)$/gm;
 
-    const hosts = await api.yoqi.hosts();
+    let hosts = "";
+
+    try {
+      hosts = await api.updateGitHubDNSFromYoqi();
+    } catch (error) {
+      try {
+        hosts = await api.updateGitHubDNSFromGitee();
+      } catch (error) {
+        try {
+          hosts = await api.updateGitHubDNSFromGitLab();
+        } catch (error) {
+          const msg = "更新 github DNS 的三个源全部失效，请重新获取";
+          props.logger.error(msg);
+          throw new Error(msg);
+        }
+      }
+    }
 
     const str = `# @@_INSERT_GIT_HOST_START_@@\n# ${dayjs().format()}${hosts}# @@_INSERT_GIT_HOST_END_@@`;
 

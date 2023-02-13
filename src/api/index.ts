@@ -1,3 +1,3 @@
-import * as yoqi from "./yoqi";
+import * as api from "./api";
 
-export default { yoqi };
+export default api;
