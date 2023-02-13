@@ -14,16 +14,16 @@ export default new CliCommand({
     let target = "";
 
     try {
-      target = "updateGitHubDNSFromYoqi";
-      hosts = await api.updateGitHubDNSFromYoqi();
+      target = "getGitHubDNSFromYoqi";
+      hosts = await api.getGitHubDNSFromYoqi();
     } catch (error) {
       try {
-        target = "updateGitHubDNSFromGitee";
-        hosts = await api.updateGitHubDNSFromGitee();
+        target = "getGitHubDNSFromGitee";
+        hosts = await api.getGitHubDNSFromGitee();
       } catch (error) {
         try {
-          target = "updateGitHubDNSFromGitLab";
-          hosts = await api.updateGitHubDNSFromGitLab();
+          target = "getGitHubDNSFromGitLab";
+          hosts = await api.getGitHubDNSFromGitLab();
         } catch (error) {
           const msg = "更新 github DNS 的三个源全部失效，请重新获取";
           props.logger.error(msg);
