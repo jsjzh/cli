@@ -1,6 +1,7 @@
 import type { StdioOptions } from "child_process";
 import { existsSync } from "fs-extra";
 import path from "path";
+import os from "os";
 
 export const createRunTools = (
   run: (
@@ -89,4 +90,76 @@ export const createRunTools = (
       npmLockPath,
     },
   };
+};
+
+const macVersionMap = new Map([
+  [21, ["Monterey", "12"]],
+  [20, ["Big Sur", "11"]],
+  [19, ["Catalina", "10.15"]],
+  [18, ["Mojave", "10.14"]],
+  [17, ["High Sierra", "10.13"]],
+  [16, ["Sierra", "10.12"]],
+  [15, ["El Capitan", "10.11"]],
+  [14, ["Yosemite", "10.10"]],
+  [13, ["Mavericks", "10.9"]],
+  [12, ["Mountain Lion", "10.8"]],
+  [11, ["Lion", "10.7"]],
+  [10, ["Snow Leopard", "10.6"]],
+  [9, ["Leopard", "10.5"]],
+  [8, ["Tiger", "10.4"]],
+  [7, ["Panther", "10.3"]],
+  [6, ["Jaguar", "10.2"]],
+  [5, ["Puma", "10.1"]],
+]);
+
+type INames =
+  | "Monterey"
+  | "Big Sur"
+  | "Catalina"
+  | "Mojave"
+  | "High Sierra"
+  | "Sierra"
+  | "El Capitan"
+  | "Yosemite"
+  | "Mavericks"
+  | "Mountain Lion"
+  | "Lion"
+  | "Snow Leopard"
+  | "Leopard"
+  | "Tiger"
+  | "Panther"
+  | "Jaguar"
+  | "Puma";
+
+type IVersions =
+  | "12"
+  | "11"
+  | "10.15"
+  | "10.14"
+  | "10.13"
+  | "10.12"
+  | "10.11"
+  | "10.10"
+  | "10.9"
+  | "10.8"
+  | "10.7"
+  | "10.6"
+  | "10.5"
+  | "10.4"
+  | "10.3"
+  | "10.2"
+  | "10.1";
+
+export const getMacRelease = () => {
+  const macRelease = os.release();
+  const firstReleaseVersion = Number(macRelease.split(".")[0]);
+  const [name, version] = macVersionMap.get(firstReleaseVersion) || [
+    "Unknown",
+    "",
+  ];
+
+  return {
+    name,
+    version,
+  } as { name: INames; version: IVersions };
 };
