@@ -7,6 +7,8 @@ export default new CliCommand({
   command: "hosts",
   description: "自动更新 hosts，需要有 /etc/hosts 的写入权限",
   async action(props) {
+    const run = props.helper.runCmd();
+
     const reg =
       /^(# @@_INSERT_GIT_HOST_START_@@)([\s\S]+)(# @@_INSERT_GIT_HOST_END_@@)$/gm;
 
@@ -46,6 +48,8 @@ export default new CliCommand({
       const newHosts = oldHosts.replace(reg, str);
       writeFileSync("/etc/hosts", newHosts);
     }
+
+    run("sudo killall -HUP mDNSResponder");
 
     props.logger.info("/etc/hosts 更新成功");
   },
