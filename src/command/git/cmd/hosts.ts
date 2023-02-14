@@ -112,7 +112,9 @@ export default new CliCommand({
     );
 
     if (updateItem) {
-      props.logger.info("查询到您的机器所适配的更新 DNS 指令，将刷新 DNS 缓存");
+      props.logger.info(
+        `查询到您的机器 ${updateItem.name} ${updateItem.version} 所适配的更新 DNS 指令，将刷新 DNS 缓存`,
+      );
       run(updateItem.cmd);
     } else {
       props.logger.info(
