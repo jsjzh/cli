@@ -89,8 +89,16 @@ export default new CliCommand<IArgs, IOpts>({
 
     fs.ensureFileSync(pushTypeMarkPath);
 
-    const result: { type: string; count: number }[] =
-      fs.readJSONSync(pushTypeMarkPath) || {};
+    let result: {
+      type: string;
+      count: number;
+    }[] = [];
+
+    try {
+      result = fs.readJSONSync(pushTypeMarkPath);
+    } catch (error) {
+      result = [];
+    }
 
     const item = result.find((item) => item.type === type);
 
