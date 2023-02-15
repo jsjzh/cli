@@ -69,6 +69,10 @@ export const createRunTools = (
   const yarnUpdate = (dep: string) => run(`yarn upgrade ${dep}`);
   const npmUpdate = (dep: string) => run(`npm update ${dep}`);
 
+  const pnpmInstall = () => run(`pnpm install`);
+  const yarnInstall = () => run(`yarn`);
+  const npmInstall = () => run(`npm install`);
+
   return {
     getOutput,
     getRegistry,
@@ -78,6 +82,7 @@ export const createRunTools = (
     add: hasPnpmLock ? pnpmAdd : hasYarnLock ? yarnAdd : npmAdd,
     addDev: hasPnpmLock ? pnpmAddDev : hasYarnLock ? yarnAddDev : npmAddDev,
     update: hasPnpmLock ? pnpmUpdate : hasYarnLock ? yarnUpdate : npmUpdate,
+    install: hasPnpmLock ? pnpmInstall : hasYarnLock ? yarnInstall : npmInstall,
 
     config: {
       use,
