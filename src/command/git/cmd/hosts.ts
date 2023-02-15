@@ -57,9 +57,23 @@ const updateDNSMaps = [
   { name: "Tiger", version: "10.4", cmd: "lookupd -flushcache" },
 ];
 
-export default new CliCommand({
+interface IArgs {}
+
+interface IOpts {
+  flushcache: boolean;
+}
+
+export default new CliCommand<IArgs, IOpts>({
   command: "hosts",
   description: "自动更新 hosts，需要有 /etc/hosts 的写入权限",
+  options: {
+    flushcache: {
+      alias: "f",
+      description: "是否刷新 DNS",
+      default: [false, false],
+      choices: ["true", "false"],
+    },
+  },
   async action(props) {
     const run = props.helper.runCmd();
 
@@ -105,21 +119,24 @@ export default new CliCommand({
 
     props.logger.info("/etc/hosts 更新成功");
 
-    const { name, version } = getMacRelease();
+    // @ts-ignore
+    if (props.data.flushcache && props.data.flushcache === "true") {
+      const { name, version } = getMacRelease();
 
-    const updateItem = updateDNSMaps.find(
-      (item) => item.name === name || item.version === version,
-    );
+      const updateItem = updateDNSMaps.find(
+        (item) => item.name === name || item.version === version,
+      );
 
-    if (updateItem) {
-      props.logger.info(
-        `查询到您的机器 ${updateItem.name} ${updateItem.version} 所适配的更新 DNS 指令，将刷新 DNS 缓存`,
-      );
-      run(updateItem.cmd);
-    } else {
-      props.logger.info(
-        "未查询到您的机型所适配的更新 DNS 指令，hosts 可能存在缓存",
-      );
+      if (updateItem) {
+        props.logger.info(
+          `查询到您的机器 ${updateItem.name} ${updateItem.version} 所适配的更新 DNS 指令，将刷新 DNS 缓存`,
+        );
+        run(updateItem.cmd);
+      } else {
+        props.logger.info(
+          "未查询到您的机型所适配的更新 DNS 指令，hosts 可能存在缓存",
+        );
+      }
     }
   },
 });
