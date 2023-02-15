@@ -114,6 +114,13 @@ export default new CliCommand<IArgs, IOpts>({
       props.logger.info(`${item.type} 已被调用 ${item.count} 次`),
     );
 
-    fs.writeJSONSync(pushTypeMarkPath, nextResult);
+    try {
+      fs.writeJSONSync(pushTypeMarkPath, nextResult);
+      props.logger.info("记录成功");
+    } catch (error) {
+      props.logger.error(
+        `${pushTypeMarkPath} 路径下记录 ${JSON.stringify(nextResult)} 失败`,
+      );
+    }
   },
 });
