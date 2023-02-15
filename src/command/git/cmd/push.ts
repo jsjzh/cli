@@ -90,7 +90,7 @@ export default new CliCommand<IArgs, IOpts>({
     fs.ensureFileSync(pushTypeMarkPath);
 
     const result: { type: string; count: number }[] =
-      fs.readJSONSync(pushTypeMarkPath);
+      fs.readJSONSync(pushTypeMarkPath) || {};
 
     const item = result.find((item) => item.type === type);
 
