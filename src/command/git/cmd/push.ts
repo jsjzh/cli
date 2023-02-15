@@ -1,5 +1,6 @@
 import { createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
+import fs from "fs-extra";
 
 // feat: 新功能、新特性
 // fix: 修改 bug
@@ -83,5 +84,28 @@ export default new CliCommand<IArgs, IOpts>({
     props.logger.info(
       `自动推送 ${process.cwd()} 项目下的所有内容至远端 ${branch} 分支成功`,
     );
+
+    const pushTypeMarkPath = `${process.env.HOME}/logs/oishi/cli/git-push/pushTypeMark.json`;
+
+    fs.ensureFileSync(pushTypeMarkPath);
+
+    const result: { type: string; count: number }[] =
+      fs.readJSONSync(pushTypeMarkPath);
+
+    const item = result.find((item) => item.type === type);
+
+    if (item) {
+      item.count++;
+    } else {
+      result.push({ type, count: 1 });
+    }
+
+    const nextResult = result.sort((a, b) => b.count - a.count);
+
+    nextResult.forEach((item) =>
+      props.logger.info(`${item.type} 已被调用 ${item.count} 次`),
+    );
+
+    fs.writeJSONSync(pushTypeMarkPath, nextResult);
   },
 });
