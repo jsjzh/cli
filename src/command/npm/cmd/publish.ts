@@ -52,6 +52,12 @@ export default new CliCommand<IArgs, IOpts>({
     await props.helper
       .runTask({ hasTip: true })
       .add({
+        title: "获取最新代码",
+        async task() {
+          run(`git pull origin ${branch}`);
+        },
+      })
+      .add({
         title: "切换 registry",
         async task() {
           run(`npm set registry=${props.data.registry}`);

@@ -77,6 +77,7 @@ export default new CliCommand<IArgs, IOpts>({
 
     const type = props.data.type?.split(": ")[0] || "chore";
 
+    run(`git pull origin ${branch}`);
     run("git add .");
     run(`git commit -m '${type}: ${props.data.message}'`);
     run(`git push origin ${branch}`);
