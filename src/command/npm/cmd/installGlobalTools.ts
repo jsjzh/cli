@@ -11,6 +11,9 @@ const arr = [
   ["ts-node", "ts-node"],
   ["pm2", "pm2"],
   ["typescript", "tsc"],
+  ["rollup", "rollup"],
+  ["parcel", "parcel"],
+  ["esbuild", "esbuild"],
 ];
 
 const deps = arr.map((item) => item[0]);
