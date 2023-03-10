@@ -12,7 +12,7 @@
     "build:watch": "esbuild src/index.ts --bundle --watch --platform=node --target=node10 --color=true --alias:@=src --outfile=dist/index.js",
     "build:cli": "esbuild src/index.ts --bundle --minify --platform=node --target=node10 --color=true --alias:@=src --outfile=dist/index.js",
     "build:js": "node build/index.js",
-    "build": "npm run build:cli"
+    "build": "npm run build:js"
   },
   "homepage": "https://github.com/jsjzh/cli#readme",
   "repository": {
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
-    "@types/node": "^18.14.6",
+    "@types/node": "^18.15.0",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "esbuild": "^0.17.11",

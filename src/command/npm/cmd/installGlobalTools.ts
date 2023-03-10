@@ -8,7 +8,7 @@ const arr = [
   ["nrm", "nrm"],
   ["http-server", "http-server"],
   ["envinfo", "envinfo"],
-  ["ts-node", "ts-node"],
+  ["tsx", "tsx"],
   ["pm2", "pm2"],
   ["typescript", "tsc"],
   ["rollup", "rollup"],
