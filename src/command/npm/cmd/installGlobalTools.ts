@@ -14,6 +14,7 @@ const arr = [
   ["rollup", "rollup"],
   ["parcel", "parcel"],
   ["esbuild", "esbuild"],
+  ["prettier", "prettier"],
 ];
 
 const deps = arr.map((item) => item[0]);
