@@ -54,7 +54,7 @@ export default new CliCommand<IArgs, IOpts>({
         "release: 发布新版本",
         "workflow: 工作流相关文件修改",
       ],
-      default: "chore",
+      default: "chore: 其他修改",
     },
     user: {
       description: "选择要提交的用户",
