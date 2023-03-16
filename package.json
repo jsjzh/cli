@@ -13,7 +13,9 @@
     "build:watch": "esbuild src/index.ts --bundle --watch --platform=node --target=node10 --color=true --alias:@=src --outfile=dist/index.js",
     "build:cli": "esbuild src/index.ts --bundle --minify --platform=node --target=node10 --color=true --alias:@=src --outfile=dist/index.js",
     "build:script": "tsx build/index.ts",
-    "build": "npm run build:script"
+    "build": "npm run build:script",
+    "format": "prettier --write --cache --parser typescript \"**/*.[tj]s?(x)\"",
+    "format:check": "prettier --check --cache --parser typescript \"**/*.[tj]s?(x)\""
   },
   "homepage": "https://github.com/jsjzh/cli#readme",
   "repository": {
