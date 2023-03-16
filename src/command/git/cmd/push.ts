@@ -41,11 +41,11 @@ export default new CliCommand<IArgs, IOpts>({
       description: "选择此次发布的内容类型",
       choices: [
         "feat: 新功能、新特性",
+        "fix: 修改 bug",
+        "chore: 其他修改",
         "docs: 文档修改",
         "build: 影响项目构建或依赖项修改",
-        "fix: 修改 bug",
         "style: 代码格式修改",
-        "chore: 其他修改",
         "refactor: 代码重构",
         "perf: 更改代码，以提高性能",
         "test: 测试用例新增、修改",
