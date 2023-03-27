@@ -5,7 +5,6 @@ const arr = [
   ["npm", "npm"],
   ["yarn", "yarn"],
   ["pnpm", "pnpm"],
-  ["nrm", "nrm"],
   ["http-server", "http-server"],
   ["envinfo", "envinfo"],
   ["tsx", "tsx"],
