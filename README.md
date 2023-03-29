@@ -18,9 +18,10 @@ pm2 start cli -- demo test
 3. [ ] 写个脚本，可以执行 npm install、npm run、yarn 等方法时，切换到 pnpm 上
 4. [ ] 添加一个，若 git 提交出错，可以重新执行，不用再输入的功能
 5. [ ] git push 遍历文件夹下所有有改动的文件，然后让选，默认全选
-6. [x] 写一个专门更新某个项目下的所有的 dep 和 devdep 的逻辑
-7. [x] git push 添加一个选择，选择要使用的用户
-8. [x] git push 添加选择前缀
+6. [ ] git push 之前，检查一下是否有 git status，如果有的话，就直接执行 git push
+7. [x] 写一个专门更新某个项目下的所有的 dep 和 devdep 的逻辑
+8. [x] git push 添加一个选择，选择要使用的用户
+9. [x] git push 添加选择前缀
    1. feat: 新功能、新特性
    2. fix: 修改 bug
    3. perf: 更改代码，以提高性能（在不影响代码内部行为的前提下，对程序性能进行优化）
