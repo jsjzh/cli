@@ -35,3 +35,4 @@ pm2 start cli -- demo test
    11. chore: 其他修改（不在上述类型中的修改）
    12. release: 发布新版本
    13. workflow: 工作流相关文件修改
+10. Chokidar 文件监听 https://github.com/paulmillr/chokidar
