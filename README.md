@@ -36,3 +36,4 @@ pm2 start cli -- demo test
    12. release: 发布新版本
    13. workflow: 工作流相关文件修改
 10. Chokidar 文件监听 https://github.com/paulmillr/chokidar
+11. [ ] 写一个能够选择文件夹，然后统一执行命令的方法
