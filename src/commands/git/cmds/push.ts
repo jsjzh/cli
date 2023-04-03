@@ -1,6 +1,8 @@
 import { createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
-import fs from "fs-extra";
+import { ensureFileSync, readJSONSync, writeJSONSync } from "fs-extra";
+
+const pushTypeMarkPath = `${process.env.HOME}/logs/oishi/cli/git-push/pushTypeMark.json`;
 
 // feat: 新功能、新特性
 // fix: 修改 bug
@@ -86,9 +88,7 @@ export default new CliCommand<IArgs, IOpts>({
       `自动推送 ${process.cwd()} 项目下的所有内容至远端 ${branch} 分支成功`,
     );
 
-    const pushTypeMarkPath = `${process.env.HOME}/logs/oishi/cli/git-push/pushTypeMark.json`;
-
-    fs.ensureFileSync(pushTypeMarkPath);
+    ensureFileSync(pushTypeMarkPath);
 
     let result: {
       type: string;
@@ -96,7 +96,7 @@ export default new CliCommand<IArgs, IOpts>({
     }[] = [];
 
     try {
-      result = fs.readJSONSync(pushTypeMarkPath);
+      result = readJSONSync(pushTypeMarkPath);
     } catch (error) {
       result = [];
     }
@@ -116,7 +116,7 @@ export default new CliCommand<IArgs, IOpts>({
     );
 
     try {
-      fs.writeJSONSync(pushTypeMarkPath, nextResult);
+      writeJSONSync(pushTypeMarkPath, nextResult);
       props.logger.info("记录成功");
     } catch (error) {
       props.logger.error(

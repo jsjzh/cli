@@ -1,13 +1,13 @@
 import { CliCore } from "@oishi/cli-core";
-import demo from "./command/demo";
-import git from "./command/git";
-import npm from "./command/npm";
+import git from "./commands/git";
+import npm from "./commands/npm";
+import run from "./commands/run";
 
 const cli = new CliCore({
   name: "cli",
   description: "自用 cli 合集",
   version: "0.0.1",
-  commands: [git, npm, demo],
+  commands: [git, npm, run],
   configs: { interactive: true },
 });
 

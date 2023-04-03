@@ -1,7 +1,11 @@
-import type { StdioOptions } from "child_process";
+import { exec } from "child_process";
+import { promisify } from "util";
+
 import { existsSync } from "fs-extra";
 import path from "path";
 import os from "os";
+
+import type { StdioOptions } from "child_process";
 
 export const createRunTools = (
   run: (
@@ -168,3 +172,5 @@ export const getMacRelease = () => {
     version,
   } as { name: INames; version: IVersions };
 };
+
+export const asyncExec = promisify(exec);
