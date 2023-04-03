@@ -13,7 +13,7 @@ pm2 start cli -- demo test
 
 ## 草稿
 
-1. [ ] 自动更新某目录下所有项目的当前分支对应的项目代码
+1. [x] 自动更新某目录下所有项目的当前分支对应的项目代码
 2. [ ] 搞一个命令，类似于 init，把所有电脑开机要做的事情做一遍，比如拉代码啥的
 3. [ ] 写个脚本，可以执行 npm install、npm run、yarn 等方法时，切换到 pnpm 上
 4. [ ] 添加一个，若 git 提交出错，可以重新执行，不用再输入的功能
@@ -36,4 +36,4 @@ pm2 start cli -- demo test
    12. release: 发布新版本
    13. workflow: 工作流相关文件修改
 10. Chokidar 文件监听 https://github.com/paulmillr/chokidar
-11. [ ] 写一个能够选择文件夹，然后统一执行命令的方法
+11. [x] 写一个能够选择文件夹，然后统一执行命令的方法

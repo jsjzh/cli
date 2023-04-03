@@ -36,7 +36,7 @@ export default new CliCommand<IArgs>({
       preData = readJSONSync(runPathsPackPath);
     } catch (error) {}
 
-    const base = path.resolve(process.cwd(), "../");
+    const base = path.resolve(process.cwd());
     const dirPaths = readdirSync(base).map((dir) => path.join(base, dir));
 
     const currentPaths = dirPaths.filter((p) =>
@@ -49,7 +49,7 @@ export default new CliCommand<IArgs>({
     }));
 
     props.helper
-      .runPrompt({ paths: preData })
+      .runPrompt({ paths: preData[base] || [] })
       .addCheckbox({
         name: "paths",
         message: "请选择执行命令的文件夹",
@@ -63,14 +63,15 @@ export default new CliCommand<IArgs>({
               encoding: "utf8",
             });
 
-            props.logger.info(p, result.stdout);
+            console.log(p, result.stdout);
+            console.log();
             console.log();
           } catch (error) {
             process.exit(1);
           }
         });
 
-        writeJSONSync(runPathsPackPath, values.paths);
+        writeJSONSync(runPathsPackPath, { [base]: values.paths });
       });
   },
 });
