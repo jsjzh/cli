@@ -11,6 +11,13 @@ import path from "path";
 const runPathsPackPath = `${process.env.HOME}/logs/oishi/cli/run-paths/paths-pack.json`;
 
 const arr = [
+  "jsjzh.github.io",
+  "mark",
+  "blog",
+  "oishi",
+  "tiny-codes",
+  "react-tiny-code",
+  "amock",
   "cli-core",
   "cli",
   "tiny-code-react-jsonplaceholder-app",
