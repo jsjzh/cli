@@ -26,12 +26,6 @@ export default new CliCommand<IArgs>({
   description: "在不同目录下执行命令",
   arguments: { cmd: { description: "输入执行命令" } },
   action(props) {
-    let preData = [];
-
-    try {
-      preData = globalDataRunPathsPackTools.readJSON();
-    } catch (error) {}
-
     const base = path.resolve(process.cwd());
     const dirPaths = readdirSync(base).map((dir) => path.join(base, dir));
 
@@ -43,6 +37,12 @@ export default new CliCommand<IArgs>({
       name: path.parse(item).name,
       value: item,
     }));
+
+    let preData = [];
+
+    try {
+      preData = globalDataRunPathsPackTools.readJSON();
+    } catch (error) {}
 
     props.helper
       .runPrompt({ paths: preData[base] || [] })
