@@ -11,15 +11,7 @@ import path from "path";
 const runPathsPackPath = `${process.env.HOME}/logs/oishi/cli/run-paths/paths-pack.json`;
 
 const arr = [
-  "jsjzh.github.io",
-  "mark",
-  "blog",
-  "oishi",
-  "tiny-codes",
-  "react-tiny-code",
   "amock",
-  "cli-core",
-  "cli",
   "tiny-code-react-jsonplaceholder-app",
   "tiny-code-web",
   "tiny-code-react",
@@ -74,6 +66,8 @@ export default new CliCommand<IArgs>({
             console.log();
             console.log();
           } catch (error) {
+            console.log(error);
+            props.logger.error(error);
             process.exit(1);
           }
         });
