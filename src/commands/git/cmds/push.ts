@@ -1,8 +1,11 @@
-import { createRunTools } from "@/util";
+import { createGlobalDataTools, createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
-import { ensureFileSync, readJSONSync, writeJSONSync } from "fs-extra";
 
-const pushTypeMarkPath = `${process.env.HOME}/logs/oishi/cli/git-push/pushTypeMark.json`;
+const createGitPushTagGlobalTools = (name: string) =>
+  createGlobalDataTools("git-push", name);
+
+const globalDataPushTypeMarkTools =
+  createGitPushTagGlobalTools("pushTypeMark.json");
 
 // feat: 新功能、新特性
 // fix: 修改 bug
@@ -88,15 +91,13 @@ export default new CliCommand<IArgs, IOpts>({
       `自动推送 ${process.cwd()} 项目下的所有内容至远端 ${branch} 分支成功`,
     );
 
-    ensureFileSync(pushTypeMarkPath);
-
     let result: {
       type: string;
       count: number;
     }[] = [];
 
     try {
-      result = readJSONSync(pushTypeMarkPath);
+      result = globalDataPushTypeMarkTools.readJSON();
     } catch (error) {
       result = [];
     }
@@ -115,13 +116,7 @@ export default new CliCommand<IArgs, IOpts>({
       props.logger.info(`${item.type} 已被调用 ${item.count} 次`),
     );
 
-    try {
-      writeJSONSync(pushTypeMarkPath, nextResult);
-      props.logger.info("记录成功");
-    } catch (error) {
-      props.logger.error(
-        `${pushTypeMarkPath} 路径下记录 ${JSON.stringify(nextResult)} 失败`,
-      );
-    }
+    globalDataPushTypeMarkTools.writeJSON(nextResult);
+    props.logger.info("记录成功");
   },
 });

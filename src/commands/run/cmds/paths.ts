@@ -1,14 +1,13 @@
-import { asyncExec } from "@/util";
+import { asyncExec, createGlobalDataTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
-import {
-  ensureFileSync,
-  readJSONSync,
-  readdirSync,
-  writeJSONSync,
-} from "fs-extra";
+import { readdirSync } from "fs-extra";
 import path from "path";
 
-const runPathsPackPath = `${process.env.HOME}/logs/oishi/cli/run-paths/paths-pack.json`;
+const createGitPushTagGlobalTools = (name: string) =>
+  createGlobalDataTools("run-paths", name);
+
+const globalDataRunPathsPackTools =
+  createGitPushTagGlobalTools("pathsPack.json");
 
 const arr = [
   "amock",
@@ -27,12 +26,10 @@ export default new CliCommand<IArgs>({
   description: "在不同目录下执行命令",
   arguments: { cmd: { description: "输入执行命令" } },
   action(props) {
-    ensureFileSync(runPathsPackPath);
-
     let preData = [];
 
     try {
-      preData = readJSONSync(runPathsPackPath);
+      preData = globalDataRunPathsPackTools.readJSON();
     } catch (error) {}
 
     const base = path.resolve(process.cwd());
@@ -72,7 +69,7 @@ export default new CliCommand<IArgs>({
           }
         });
 
-        writeJSONSync(runPathsPackPath, { [base]: values.paths });
+        globalDataRunPathsPackTools.writeJSON({ [base]: values.paths });
       });
   },
 });

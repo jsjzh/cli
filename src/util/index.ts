@@ -1,11 +1,20 @@
 import { exec } from "child_process";
 import { promisify } from "util";
 
-import { existsSync } from "fs-extra";
+import {
+  ensureFileSync,
+  existsSync,
+  readFileSync,
+  readJSONSync,
+  writeFileSync,
+  writeJSONSync,
+} from "fs-extra";
 import path from "path";
 import os from "os";
 
 import type { StdioOptions } from "child_process";
+
+export const asyncExec = promisify(exec);
 
 export const createRunTools = (
   run: (
@@ -173,4 +182,26 @@ export const getMacRelease = () => {
   } as { name: INames; version: IVersions };
 };
 
-export const asyncExec = promisify(exec);
+export const createGlobalDataTools = (
+  tag: string,
+  name: string,
+  config?: { base: string },
+) => {
+  const globalDataPath = path.join(
+    config?.base || process.env.HOME!,
+    "logs/oishi/cli",
+    tag,
+    name,
+  );
+
+  ensureFileSync(globalDataPath);
+
+  return {
+    globalDataPath,
+
+    read: () => readFileSync(globalDataPath),
+    readJSON: () => readJSONSync(globalDataPath),
+    write: (data: string) => writeFileSync(globalDataPath, data),
+    writeJSON: (obj: any) => writeJSONSync(globalDataPath, obj),
+  };
+};
