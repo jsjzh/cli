@@ -11,6 +11,8 @@ const globalDataRunPathsPackTools =
 
 const arr = [
   "amock",
+  "cli-core",
+  "cli",
   "tiny-code-react-jsonplaceholder-app",
   "tiny-code-web",
   "tiny-code-react",
