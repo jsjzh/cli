@@ -1,7 +1,7 @@
 import { CliCore } from "@oishi/cli-core";
-import git from "./commands/git";
-import npm from "./commands/npm";
-import run from "./commands/run";
+import git from "./command/git";
+import npm from "./command/npm";
+import run from "./command/run";
 
 const cli = new CliCore({
   name: "cli",

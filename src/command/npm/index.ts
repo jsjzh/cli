@@ -1,9 +1,9 @@
 import { CliCommand } from "@oishi/cli-core";
 
-import install from "./cmds/install";
-import installGlobalTools from "./cmds/installGlobalTools";
-import publish from "./cmds/publish";
-import updateDep from "./cmds/updateDep";
+import install from "./cmd/install";
+import installGlobalTools from "./cmd/installGlobalTools";
+import publish from "./cmd/publish";
+import updateDep from "./cmd/updateDep";
 
 export default new CliCommand({
   command: "npm",

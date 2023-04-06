@@ -1,7 +1,7 @@
 import { CliCommand } from "@oishi/cli-core";
-import hosts from "./cmds/hosts";
-import pull from "./cmds/pull";
-import push from "./cmds/push";
+import hosts from "./cmd/hosts";
+import pull from "./cmd/pull";
+import push from "./cmd/push";
 
 export default new CliCommand({
   command: "git",
