@@ -70,12 +70,12 @@ export default new CliCommand<IArgs, IOpts>({
     flushcache: {
       alias: "f",
       description: "是否刷新 DNS",
-      default: [false, false],
+      default: ["false", "false"],
       choices: ["true", "false"],
     },
   },
   async action(props) {
-    const run = props.helper.runCmd();
+    const run = props.runCmd();
 
     const reg =
       /^(# @@_INSERT_GIT_HOST_START_@@)([\s\S]+)(# @@_INSERT_GIT_HOST_END_@@)$/gm;

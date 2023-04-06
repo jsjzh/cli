@@ -68,7 +68,7 @@ export default new CliCommand<IArgs, IOpts>({
     },
   },
   action(props) {
-    const run = props.helper.runCmd();
+    const run = props.runCmd();
     const tools = createRunTools(run);
     const branch = tools.getBranch();
 

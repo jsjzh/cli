@@ -5,7 +5,7 @@ export default new CliCommand({
   command: "pull",
   description: "自动 pull 当前分支下的远程代码",
   action(props) {
-    const run = props.helper.runCmd();
+    const run = props.runCmd();
     const tools = createRunTools(run);
     const branch = tools.getBranch();
     run(`git pull origin ${branch}`);

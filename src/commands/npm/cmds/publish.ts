@@ -1,5 +1,5 @@
 import { createRunTools } from "@/util";
-import { CliCommand } from "@oishi/cli-core";
+import { CliCommand, createTask } from "@oishi/cli-core";
 
 interface IArgs {
   message: string;
@@ -40,17 +40,16 @@ export default new CliCommand<IArgs, IOpts>({
     user: {
       description: "选择要提交的用户",
       choices: ["jinzhehao", "jsjzh"],
-      default: ["jinzhehao"],
+      default: "jinzhehao",
     },
   },
   async action(props) {
-    const run = props.helper.runCmd();
+    const run = props.runCmd();
     const tools = createRunTools(run);
     const oldRegistry = tools.getRegistry();
     const branch = tools.getBranch();
 
-    await props.helper
-      .runTask({ hasTip: true })
+    await createTask({ showLog: true })
       .add({
         title: "获取最新代码",
         async task() {
@@ -107,6 +106,6 @@ export default new CliCommand<IArgs, IOpts>({
           run(`npm set registry=${oldRegistry}`);
         },
       })
-      .run();
+      .execute();
   },
 });

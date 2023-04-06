@@ -5,7 +5,7 @@ export default new CliCommand({
   command: "install",
   description: `安装依赖`,
   action(props) {
-    const run = props.helper.runCmd();
+    const run = props.runCmd();
     const tools = createRunTools(run);
 
     props.logger.info(`将使用 ${tools.config.use} 安装依赖`);

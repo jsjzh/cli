@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@oishi/cli-core':
-    specifier: ^2.0.7
-    version: 2.0.7
+    specifier: ^3.0.3
+    version: 3.0.3
   axios:
     specifier: ^1.3.5
     version: 1.3.5
@@ -341,22 +341,21 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@oishi/cli-core@2.0.7:
-    resolution: {integrity: sha512-UWVPIvNhk9cavFIq32riFDSD0omL6Ww5ImKcL7eORVqI80T55Fd467C6zz3clj1932GFu3ugr6aFZF4TR880jQ==}
+  /@oishi/cli-core@3.0.3:
+    resolution: {integrity: sha512-hfznSMgeDSYkzCVe2YzJKkKzn5T60urE1AgrVR+cvUsiltKiLjSrqwZ/fs9PQZ1uO7yrJAbc6N9V4vpZrDrNYA==}
     dependencies:
-      '@types/cron': 2.0.0
+      '@types/cron': 2.0.1
       '@types/inquirer': 9.0.3
       '@types/node': 18.15.11
       commander: 10.0.0
-      cron: 2.2.0
-      inquirer: 9.1.4
-      lodash: 4.17.21
+      cron: 2.3.0
+      inquirer: 9.1.5
       winston: 3.8.2
       winston-daily-rotate-file: 4.7.1(winston@3.8.2)
     dev: false
 
-  /@types/cron@2.0.0:
-    resolution: {integrity: sha512-xZM08fqvwIXgghtPVkSPKNgC+JoMQ2OHazEvyTKnNf7aWu1aB6/4lBbQFrb03Td2cUGG7ITzMv3mFYnMu6xRaQ==}
+  /@types/cron@2.0.1:
+    resolution: {integrity: sha512-WHa/1rtNtD2Q/H0+YTTZoty+/5rcE66iAFX2IY+JuUoOACsevYyFkSYu/2vdw+G5LrmO7Lxowrqm0av4k3qWNQ==}
     dependencies:
       '@types/luxon': 3.2.0
       '@types/node': 18.15.11
@@ -754,8 +753,8 @@ packages:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
-  /cron@2.2.0:
-    resolution: {integrity: sha512-GPiI3OgMv83XRtEUc2gUdaLvJhO3XbLN288layOBkDTupg0RK5IECNGpkykIMHg+muVR2bxt29b0xvCAcBrjYQ==}
+  /cron@2.3.0:
+    resolution: {integrity: sha512-ZN5HP8zDY41sJolMsbc+GksRATcbvkPKF5wR/qc8FrV4NBVi9ORQa1HmYa5GydaysUB80X9XpRlRkooa5uEtTA==}
     dependencies:
       luxon: 3.3.0
     dev: false
@@ -1232,9 +1231,9 @@ packages:
   /inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
 
-  /inquirer@9.1.4:
-    resolution: {integrity: sha512-9hiJxE5gkK/cM2d1mTEnuurGTAoHebbkX0BYl3h7iEg7FYfuNIom+nDfBCSWtvSnoSrWCeBxqqBZu26xdlJlXA==}
-    engines: {node: '>=12.0.0'}
+  /inquirer@9.1.5:
+    resolution: {integrity: sha512-3ygAIh8gcZavV9bj6MTdYddG2zPSYswP808fKS46NOwlF0zZljVpnLCHODDqItWJDbDpLb3aouAxGaJbkxoppA==}
+    engines: {node: '>=14.18.0'}
     dependencies:
       ansi-escapes: 6.0.0
       chalk: 5.2.0
@@ -1243,7 +1242,7 @@ packages:
       external-editor: 3.1.0
       figures: 5.0.0
       lodash: 4.17.21
-      mute-stream: 0.0.8
+      mute-stream: 1.0.0
       ora: 6.1.2
       run-async: 2.4.1
       rxjs: 7.8.0
@@ -1431,8 +1430,9 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: false
 
-  /mute-stream@0.0.8:
-    resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
+  /mute-stream@1.0.0:
+    resolution: {integrity: sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dev: false
 
   /natural-compare-lite@1.4.0:

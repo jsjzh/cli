@@ -24,7 +24,7 @@ export default new CliCommand({
   command: "installGlobalTools",
   description: `自动全局安装最新的常用的工具，${deps.join(", ")}`,
   action(props) {
-    const run = props.helper.runCmd();
+    const run = props.runCmd();
     const tools = createRunTools(run);
 
     const oldVersions = clis.map((cli) => tools.getVersion(cli));

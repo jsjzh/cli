@@ -8,7 +8,7 @@ const cli = new CliCore({
   description: "自用 cli 合集",
   version: "0.0.1",
   commands: [git, npm, run],
-  configs: { interactive: true },
+  config: { interactive: true },
 });
 
 cli.execute();
