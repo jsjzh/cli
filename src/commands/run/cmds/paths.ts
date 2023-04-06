@@ -23,7 +23,6 @@ export default new CliCommand<IArgs, IOpts>({
           cwd: p,
           encoding: "utf8",
         });
-
         console.log(p, result.stdout);
         console.log();
         console.log();
