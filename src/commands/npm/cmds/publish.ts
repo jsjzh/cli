@@ -1,5 +1,7 @@
 import { createRunTools } from "@/util";
 import { CliCommand, createTask } from "@oishi/cli-core";
+import { readJSONSync } from "fs-extra";
+import path from "path";
 
 interface IArgs {
   message: string;
@@ -104,6 +106,13 @@ export default new CliCommand<IArgs, IOpts>({
         title: "切换 registry 至发布前",
         async task() {
           run(`npm set registry=${oldRegistry}`);
+        },
+      })
+      .add({
+        title: "更新 taobao npm 源",
+        async task() {
+          const pkg = readJSONSync(path.join(process.cwd(), "package.json"));
+          run(`cnpm sync ${pkg.name}@${pkg.version}`);
         },
       })
       .execute();
