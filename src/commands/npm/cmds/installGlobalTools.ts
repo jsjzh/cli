@@ -5,15 +5,16 @@ const arr = [
   ["npm", "npm"],
   ["yarn", "yarn"],
   ["pnpm", "pnpm"],
-  ["http-server", "http-server"],
+  ["cnpm", "cnpm"],
+  ["prettier", "prettier"],
   ["envinfo", "envinfo"],
-  ["tsx", "tsx"],
   ["pm2", "pm2"],
-  ["typescript", "tsc"],
+  ["http-server", "http-server"],
   ["rollup", "rollup"],
   ["parcel", "parcel"],
   ["esbuild", "esbuild"],
-  ["prettier", "prettier"],
+  ["tsx", "tsx"],
+  ["typescript", "tsc"],
 ];
 
 const deps = arr.map((item) => item[0]);
