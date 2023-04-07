@@ -26,14 +26,12 @@ interface IArgs {
 }
 
 interface IOpts {
-  user: string;
   type: string;
+  user: {
+    name: string;
+    email: string;
+  };
 }
-
-const users = {
-  jsjzh: { email: "kimimi_king@163.com" },
-  jinzhehao: { email: "jinzhehao@souche.com" },
-};
 
 export default new CliCommand<IArgs, IOpts>({
   command: "push",
@@ -45,25 +43,34 @@ export default new CliCommand<IArgs, IOpts>({
     type: {
       description: "选择此次发布的内容类型",
       choices: [
-        "feat: 新功能、新特性",
-        "fix: 修改 bug",
-        "chore: 其他修改",
-        "docs: 文档修改",
-        "build: 影响项目构建或依赖项修改",
-        "style: 代码格式修改",
-        "refactor: 代码重构",
-        "perf: 更改代码，以提高性能",
-        "test: 测试用例新增、修改",
-        "revert: 恢复上一次提交",
-        "ci: 持续集成相关文件修改",
-        "release: 发布新版本",
-        "workflow: 工作流相关文件修改",
+        { name: "feat: 新功能、新特性", value: "feat" },
+        { name: "fix: 修改 bug", value: "fix" },
+        { name: "chore: 其他修改", value: "chore" },
+        { name: "docs: 文档修改", value: "docs" },
+        { name: "build: 影响项目构建或依赖项修改", value: "build" },
+        { name: "style: 代码格式修改", value: "style" },
+        { name: "refactor: 代码重构", value: "refactor" },
+        { name: "perf: 更改代码，以提高性能", value: "perf" },
+        { name: "test: 测试用例新增、修改", value: "test" },
+        { name: "revert: 恢复上一次提交", value: "revert" },
+        { name: "ci: 持续集成相关文件修改", value: "ci" },
+        { name: "release: 发布新版本", value: "release" },
+        { name: "workflow: 工作流相关文件修改", value: "workflow" },
       ],
-      default: "chore: 其他修改",
+      default: "chore",
     },
     user: {
       description: "选择要提交的用户",
-      choices: ["jinzhehao", "jsjzh"],
+      choices: [
+        {
+          name: "jinzhehao",
+          value: { name: "jinzhehao", email: "jinzhehao@souche.com" },
+        },
+        {
+          name: "jsjzh",
+          value: { name: "jsjzh", email: "kimimi_king@163.com" },
+        },
+      ],
       default: "jinzhehao",
     },
   },
@@ -72,13 +79,8 @@ export default new CliCommand<IArgs, IOpts>({
     const tools = createRunTools(run);
     const branch = tools.getBranch();
 
-    run(`git config --local user.name "${props.data.user}"`);
-
-    run(
-      `git config --local user.email "${
-        users[props.data.user as keyof typeof users].email
-      }"`,
-    );
+    run(`git config --local user.name "${props.data.user?.name}"`);
+    run(`git config --local user.email "${props.data.user?.email}"`);
 
     const type = props.data.type?.split(": ")[0] || "chore";
 

@@ -71,7 +71,10 @@ export default new CliCommand<IArgs, IOpts>({
       alias: "f",
       description: "是否刷新 DNS",
       default: ["false", "false"],
-      choices: ["true", "false"],
+      choices: [
+        { name: "true", value: true },
+        { name: "false", value: false },
+      ],
     },
   },
   async action(props) {
