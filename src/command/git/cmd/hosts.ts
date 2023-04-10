@@ -123,7 +123,7 @@ export default new CliCommand<IArgs, IOpts>({
     props.logger.info("/etc/hosts 更新成功");
 
     // @ts-ignore
-    if (props.data.flushcache && props.data.flushcache === "true") {
+    if (props.data.flushcache && props.data.flushcache) {
       const { name, version } = getMacRelease();
 
       const updateItem = updateDNSMaps.find(
