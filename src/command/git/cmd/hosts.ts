@@ -4,6 +4,9 @@ import dayjs from "dayjs";
 import api from "@/api";
 import { getMacRelease } from "@/util";
 
+// TODO 也要把这个的内容清空
+// /Users/wireless/.ssh/known_hosts
+
 const updateDNSMaps = [
   {
     name: "Monterey",
