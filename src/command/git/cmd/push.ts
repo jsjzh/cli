@@ -1,6 +1,8 @@
 import { createGlobalDataTools, createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
 
+// TODO 需要检测一下远程是否有分支，有的话再执行 git pull
+
 const createGitPushTagGlobalTools = (name: string) =>
   createGlobalDataTools("git-push", name);
 
