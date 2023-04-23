@@ -33,12 +33,10 @@ export default new CliCommand({
 
     const newVersions = clis.map((cli) => tools.getVersion(cli));
 
-    props.logger.info(
-      `${deps.join(", ")} 的旧版本为：${oldVersions.join(", ")}`,
-    );
-
-    props.logger.info(
-      `${deps.join(", ")} 的新版本为：${newVersions.join(", ")}`,
-    );
+    deps.forEach((dep, index) => {
+      props.logger.info(
+        `${dep} 版本变更：${oldVersions[index]} ---> ${newVersions[index]}`,
+      );
+    });
   },
 });
