@@ -90,16 +90,21 @@ export default new CliCommand<IArgs, IOpts>({
     let target = "";
 
     try {
-      target = "getGitHubDNSFromYoqi";
-      hosts = await api.getGitHubDNSFromYoqi();
+      target = "getGitHubDNSFromGitHub520";
+      hosts = await api.getGitHubDNSFromGitHub520();
     } catch (error) {
       try {
-        target = "getGitHubDNSFromGitLab";
-        hosts = await api.getGitHubDNSFromGitLab();
+        target = "getGitHubDNSFromIneo6";
+        hosts = await api.getGitHubDNSFromIneo6();
       } catch (error) {
-        const msg = "更新 github DNS 的三个源全部失效，请重新获取";
-        props.logger.error(msg);
-        throw new Error(msg);
+        try {
+          target = "getGitHubDNSFromYoqi";
+          hosts = await api.getGitHubDNSFromYoqi();
+        } catch (error) {
+          const msg = "更新 github DNS 的三个源全部失效，请重新获取";
+          props.logger.error(msg);
+          throw new Error(msg);
+        }
       }
     }
 
