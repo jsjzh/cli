@@ -15,6 +15,7 @@ const arr = [
   ["esbuild", "esbuild"],
   ["tsx", "tsx"],
   ["typescript", "tsc"],
+  ["@nestjs/cli", "nest"],
 ];
 
 const deps = arr.map((item) => item[0]);
