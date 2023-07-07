@@ -2,7 +2,7 @@ import { CliCommand } from "@oishi/cli-core";
 import { machineId } from "node-machine-id";
 import path from "path";
 import fs from "fs-extra";
-import { asyncExec } from "@/util";
+import { asyncExec, createRunTools, runLineCmd } from "@/util";
 
 interface IArgs {}
 
@@ -68,8 +68,16 @@ export default new CliCommand<IArgs, IOpts>({
       throw new Error("updateDepversion 步骤发现不能解析的路径，请检查");
     }
 
+    const realUpdateDepVersionPaths = currUpdateDepVersionPaths.filter(
+      (item) => {
+        const runner = runLineCmd(item);
+        const tools = createRunTools(runner);
+        return tools.getGitIsChange();
+      },
+    );
+
     await asyncExec(
-      `cli run paths "cli git push 'update dep version' --user jsjzh" --paths "${currUpdateDepVersionPaths.join(
+      `cli run paths "cli git push 'update dep version' --user jsjzh" --paths "${realUpdateDepVersionPaths.join(
         ", ",
       )}"`,
     );

@@ -1,4 +1,4 @@
-import { exec } from "child_process";
+import { exec, execSync } from "child_process";
 import { promisify } from "util";
 
 import {
@@ -16,15 +16,36 @@ import type { StdioOptions } from "child_process";
 
 export const asyncExec = promisify(exec);
 
+export const runLineCmd = (cwd: string = process.cwd()) => {
+  return (
+    cmd: string,
+    stdio: StdioOptions = "inherit",
+    showExecuteCmd = true,
+  ) => {
+    try {
+      if (showExecuteCmd) {
+        console.log("");
+        console.log(`将在 ${cwd} 运行指令 ${cmd}`);
+        console.log("");
+      }
+      return execSync(cmd, {
+        cwd,
+        stdio: stdio ? stdio : "ignore",
+        encoding: "utf8",
+      });
+    } catch (error) {
+      throw new Error(`在 ${cwd} 运行 ${cmd} 指令出错`);
+    }
+  };
+};
+
 export const createRunTools = (
   run: (
     cmd: string,
     stdio?: StdioOptions | undefined,
     showExecuteCmd?: boolean | undefined,
-  ) => string,
+  ) => any,
 ) => {
-  const root = process.cwd();
-
   const getOutput = (cmd: string) => {
     try {
       return run(cmd, "pipe", false).replace(/[\f\n\r\t\v]/g, "");
@@ -37,22 +58,16 @@ export const createRunTools = (
 
   const getBranch = () => getOutput("git symbolic-ref --short -q HEAD");
 
+  const getGitIsChange = () => !!getOutput("git status -s");
+
   const getVersion = (tools: string) => {
     const result = getOutput(`${tools} --version`);
     return result ? result : "未安装";
   };
 
-  const getPnpmLockPath = (root: string) =>
-    path.resolve(root, "./pnpm-lock.yaml");
-
-  const getYarnLockPath = (root: string) => path.resolve(root, "./yarn.lock");
-
-  const getNpmLockPath = (root: string) =>
-    path.resolve(root, "./package-lock.json");
-
-  const pnpmLockPath = getPnpmLockPath(root);
-  const yarnLockPath = getYarnLockPath(root);
-  const npmLockPath = getNpmLockPath(root);
+  const pnpmLockPath = path.join(getOutput("pwd"), "pnpm-lock.yaml");
+  const yarnLockPath = path.join(getOutput("pwd"), "yarn.lock");
+  const npmLockPath = path.join(getOutput("pwd"), "package-lock.json");
 
   const hasPnpmLock = existsSync(pnpmLockPath);
   const hasYarnLock = existsSync(yarnLockPath);
@@ -91,6 +106,7 @@ export const createRunTools = (
     getRegistry,
     getBranch,
     getVersion,
+    getGitIsChange,
 
     add: hasPnpmLock ? pnpmAdd : hasYarnLock ? yarnAdd : npmAdd,
     addDev: hasPnpmLock ? pnpmAddDev : hasYarnLock ? yarnAddDev : npmAddDev,
