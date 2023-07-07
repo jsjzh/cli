@@ -76,11 +76,15 @@ export default new CliCommand<IArgs, IOpts>({
       },
     );
 
-    await asyncExec(
-      `cli run paths "cli git push 'update dep version' --user jsjzh" --paths "${realUpdateDepVersionPaths.join(
-        ", ",
-      )}"`,
-    );
+    if (realUpdateDepVersionPaths.length) {
+      await asyncExec(
+        `cli run paths "cli git push 'update dep version' --user jsjzh" --paths "${realUpdateDepVersionPaths.join(
+          ", ",
+        )}"`,
+      );
+    } else {
+      console.log("没有需要 updateDepVersion 的项目");
+    }
 
     console.log("执行完毕");
   },
