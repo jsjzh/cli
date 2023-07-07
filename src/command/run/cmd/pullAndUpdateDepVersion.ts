@@ -56,14 +56,20 @@ export default new CliCommand<IArgs, IOpts>({
       throw new Error("pull 步骤发现不能解析的路径，请检查");
     }
 
-    const promises = currPullPaths.map((item) =>
-      asyncExec("cli git pull", {
-        cwd: item,
-        encoding: "utf8",
-      }),
+    await asyncExec(
+      `cli run paths "cli git pull" --paths "${currPullPaths.join(", ")}"`,
     );
 
-    await Promise.all(promises);
+    // const promises = currPullPaths.map((item) => {
+    //   console.log(`将在 ${item} 路径执行 cli git pull 命令`);
+
+    //   return asyncExec("cli git pull", {
+    //     cwd: item,
+    //     encoding: "utf8",
+    //   });
+    // });
+
+    // await Promise.all(promises);
 
     const currUpdateDepVersionPaths = updateDepVersionPaths.map((item) =>
       path.join(basePath, item),
@@ -73,12 +79,16 @@ export default new CliCommand<IArgs, IOpts>({
       throw new Error("updateDepversion 步骤发现不能解析的路径，请检查");
     }
 
-    const promises2 = currUpdateDepVersionPaths.map((item) =>
-      asyncExec("cli git push 'update dep version' --user jsjzh", {
+    const promises2 = currUpdateDepVersionPaths.map((item) => {
+      console.log(
+        `将在 ${item} 路径执行 cli git push 'update dep version' --user jsjzh 命令`,
+      );
+
+      return asyncExec("cli git push 'update dep version' --user jsjzh", {
         cwd: item,
         encoding: "utf8",
-      }),
-    );
+      });
+    });
 
     await Promise.all(promises2);
 
