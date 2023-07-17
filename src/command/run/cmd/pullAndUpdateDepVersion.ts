@@ -11,6 +11,8 @@ interface IOpts {}
 const basePathMaps: { [k: string]: string } = {
   "8319ed5741c82e7d9eb786b092baef3f99498d91068a2f7668ec35270d2a3e1b":
     "/Users/wireless/Desktop/PROJECT",
+  "380acf650d635209a7bca630eee4927a39d62d714873e6ea25a809bbead6c261":
+    "/Users/dasouche/Desktop/PROJECT/git",
 };
 
 const pullPaths = [
@@ -21,7 +23,7 @@ const pullPaths = [
   "/cli-core",
   "/cli",
   "/tiny-code-web",
-  "/tiny-code-vue",
+  // "/tiny-code-vue",
   "/tiny-code-react",
   "/tiny-code-react-antd-app",
   "/tiny-code-react-jsonplaceholder-app",
