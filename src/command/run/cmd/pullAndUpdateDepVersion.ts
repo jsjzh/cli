@@ -2,7 +2,7 @@ import { CliCommand } from "@oishi/cli-core";
 import { machineId } from "node-machine-id";
 import path from "path";
 import fs from "fs-extra";
-import { asyncExec, createRunTools, runLineCmd } from "@/util";
+import { createRunTools, runLineCmd } from "@/util";
 
 interface IArgs {}
 
