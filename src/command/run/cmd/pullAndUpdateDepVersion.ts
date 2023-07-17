@@ -69,6 +69,11 @@ export default new CliCommand<IArgs, IOpts>({
       throw new Error("updateDepversion 步骤发现不能解析的路径，请检查");
     }
 
+    currUpdateDepVersionPaths.forEach((item) => {
+      const runner = runLineCmd(item);
+      runner("cli npm updateDep");
+    });
+
     const realUpdateDepVersionPaths = currUpdateDepVersionPaths.filter(
       (item) => {
         const runner = runLineCmd(item);
