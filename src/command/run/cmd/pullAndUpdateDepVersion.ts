@@ -56,9 +56,10 @@ export default new CliCommand<IArgs, IOpts>({
       throw new Error("pull 步骤发现不能解析的路径，请检查");
     }
 
-    await asyncExec(
-      `cli run paths "cli git pull" --paths "${currPullPaths.join(", ")}"`,
-    );
+    currPullPaths.forEach((item) => {
+      const runner = runLineCmd(item);
+      runner("cli git pull");
+    });
 
     const currUpdateDepVersionPaths = updateDepVersionPaths.map((item) =>
       path.join(basePath, item),
@@ -77,11 +78,10 @@ export default new CliCommand<IArgs, IOpts>({
     );
 
     if (realUpdateDepVersionPaths.length) {
-      await asyncExec(
-        `cli run paths "cli git push 'update dep version' --user jsjzh" --paths "${realUpdateDepVersionPaths.join(
-          ", ",
-        )}"`,
-      );
+      realUpdateDepVersionPaths.forEach((item) => {
+        const runner = runLineCmd(item);
+        runner("cli git push 'update dep version' --user jsjzh");
+      });
     } else {
       console.log("没有需要 updateDepVersion 的项目");
     }
