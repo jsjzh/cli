@@ -2,7 +2,8 @@ module.exports = {
   extends: ["alloy", "alloy/typescript"],
   env: {
     // 你的环境变量（包含多个预定义的全局变量）
-    ESNext: true,
+    node: true,
+    // browser: true,
     // browser: true,
     // node: true,
     // mocha: true,
@@ -17,5 +18,7 @@ module.exports = {
   rules: {
     // 自定义你的规则
     "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "@typescript-eslint/no-empty-interface": "off",
   },
 };
