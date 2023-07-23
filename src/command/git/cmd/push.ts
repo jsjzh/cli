@@ -44,6 +44,7 @@ export default new CliCommand<IArgs, IOpts>({
   options: {
     type: {
       description: "选择此次发布的内容类型",
+      // TODO 这里好像使用 line 的方式只能输入 name？不能输入 value？
       choices: [
         { name: "feat: 新功能、新特性", value: "feat" },
         { name: "fix: 修改 bug", value: "fix" },
@@ -87,6 +88,12 @@ export default new CliCommand<IArgs, IOpts>({
     const type = props.data.type?.split(": ")[0] || "chore";
 
     run(`git pull origin ${branch}`);
+
+    if (!tools.getGitIsChange()) {
+      props.logger.info("当前分支下没有变更，无需提交");
+      return;
+    }
+
     run("git add .");
     run(`git commit -m '${type}: ${props.data.message}'`);
     run(`git push origin ${branch}`);
