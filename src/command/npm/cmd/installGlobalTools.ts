@@ -2,7 +2,7 @@ import { createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
 
 const arr = [
-  ["npm", "npm"],
+  // ["npm", "npm"],
   ["yarn", "yarn"],
   ["pnpm", "pnpm"],
   ["cnpm", "cnpm"],
