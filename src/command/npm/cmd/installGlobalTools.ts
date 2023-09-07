@@ -14,6 +14,7 @@ const arr = [
   ["parcel", "parcel"],
   ["esbuild", "esbuild"],
   ["tsx", "tsx"],
+  ["ts-node", "ts-node"],
   ["typescript", "tsc"],
   ["@nestjs/cli", "nest"],
 ];
