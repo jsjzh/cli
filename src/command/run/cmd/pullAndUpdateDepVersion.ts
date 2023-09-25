@@ -27,6 +27,7 @@ const pullPaths = [
   "/tiny-code-react",
   "/tiny-code-react-antd-app",
   "/tiny-code-react-jsonplaceholder-app",
+  "rxjs-tiny-code",
 ];
 
 const updateDepVersionPaths = [
@@ -37,6 +38,7 @@ const updateDepVersionPaths = [
   "/tiny-code-react",
   "/tiny-code-react-antd-app",
   "/tiny-code-react-jsonplaceholder-app",
+  "rxjs-tiny-code",
 ];
 
 export default new CliCommand<IArgs, IOpts>({
