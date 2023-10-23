@@ -34,12 +34,12 @@
     "node-machine-id": "^1.1.12"
   },
   "devDependencies": {
-    "@types/fs-extra": "^11.0.2",
-    "@types/node": "^18.18.5",
+    "@types/fs-extra": "^11.0.3",
+    "@types/node": "^18.18.6",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "esbuild": "^0.17.19",
-    "eslint": "^8.51.0",
+    "eslint": "^8.52.0",
     "eslint-config-alloy": "^4.9.0",
     "typescript": "^4.9.5"
   }
