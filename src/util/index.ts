@@ -13,6 +13,7 @@ import path from "path";
 import os from "os";
 
 import type { StdioOptions } from "child_process";
+import semver from "semver";
 
 export const asyncExec = promisify(exec);
 
@@ -221,3 +222,8 @@ export const createGlobalDataTools = (
     writeJSON: (obj: any) => writeJSONSync(globalDataPath, obj),
   };
 };
+
+export const updateVersion = (
+  version: string,
+  release: semver.ReleaseType = "patch",
+) => semver.inc(version, release);
