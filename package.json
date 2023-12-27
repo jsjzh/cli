@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@oishi/cli-core": "^3.1.0",
-    "axios": "^1.6.2",
+    "axios": "^1.6.3",
     "dayjs": "^1.11.10",
     "fs-extra": "^11.2.0",
     "node-machine-id": "^1.1.12",
