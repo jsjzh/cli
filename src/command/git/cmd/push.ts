@@ -66,7 +66,7 @@ export default new CliCommand<IArgs, IOpts>({
       description: "选择要提交的用户",
       choices: [
         {
-          name: "jinzhehao",
+          name: "金哲豪",
           value: { name: "jinzhehao", email: "jinzhehao@souche.com" },
         },
         {
