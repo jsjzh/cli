@@ -16,7 +16,8 @@
     "build": "npm run build:script",
     "lint": "eslint \"./**/*.{ts,tsx}\" --cache --fix",
     "format": "prettier --write --cache --parser typescript \"**/*.[tj]s?(x)\"",
-    "format:check": "prettier --check --cache --parser typescript \"**/*.[tj]s?(x)\""
+    "format:check": "prettier --check --cache --parser typescript \"**/*.[tj]s?(x)\"",
+    "link": "npm link"
   },
   "homepage": "https://github.com/jsjzh/cli#readme",
   "repository": {
