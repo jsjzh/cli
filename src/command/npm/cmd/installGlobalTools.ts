@@ -16,8 +16,8 @@ const arr = [
   ["tsx", "tsx"],
   ["ts-node", "ts-node"],
   ["typescript", "tsc"],
-  ["@nestjs/cli", "nest"],
-  ["create-next-app", "create-next-app"],
+  // ["@nestjs/cli", "nest"],
+  // ["create-next-app", "create-next-app"],
 ];
 
 const deps = arr.map((item) => item[0]);
@@ -37,9 +37,15 @@ export default new CliCommand({
     const newVersions = clis.map((cli) => tools.getVersion(cli));
 
     deps.forEach((dep, index) => {
-      props.logger.info(
-        `${dep} 版本变更：${oldVersions[index]} ---> ${newVersions[index]}`,
-      );
+      if (oldVersions[index] === newVersions[index]) {
+        props.logger.info(
+          `${dep} 版本未发生变更，当前版本 ${newVersions[index]}`,
+        );
+      } else {
+        props.logger.info(
+          `${dep} 版本变更：${oldVersions[index]} ---> ${newVersions[index]}`,
+        );
+      }
     });
   },
 });
