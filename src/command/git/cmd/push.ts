@@ -3,11 +3,17 @@ import { CliCommand } from "@oishi/cli-core";
 
 // TODO 需要增加一个检测，检查远程是否有分支，有的话再执行 git pull
 
-const createGitPushTagGlobalTools = (name: string) =>
-  createGlobalDataTools("git-push", name);
+const createGitPushTagGlobalTools = <T>(name: string) =>
+  createGlobalDataTools<T>("git-push", name);
 
-const globalDataPushTypeMarkTools =
-  createGitPushTagGlobalTools("pushTypeMark.json");
+const globalDataPushTypeMark = createGitPushTagGlobalTools<
+  {
+    type: string;
+    count: number;
+  }[]
+>("pushTypeMark.json");
+const globalDataPushInfo =
+  createGitPushTagGlobalTools<Partial<IOpts & IArgs>>("pushInfo.json");
 
 // feat: 新功能、新特性
 // fix: 修改 bug
@@ -33,6 +39,14 @@ interface IOpts {
     name: string;
     email: string;
   };
+}
+
+let pushInfo: ReturnType<typeof globalDataPushInfo.readJSON> = {};
+
+try {
+  pushInfo = globalDataPushInfo.readJSON();
+} catch (error) {
+  pushInfo = {};
 }
 
 export default new CliCommand<IArgs, IOpts>({
@@ -74,7 +88,7 @@ export default new CliCommand<IArgs, IOpts>({
           value: { name: "jsjzh", email: "kimimi_king@163.com" },
         },
       ],
-      default: "jinzhehao",
+      default: pushInfo?.user?.name || "jinzhehao",
     },
   },
   action(props) {
@@ -108,7 +122,7 @@ export default new CliCommand<IArgs, IOpts>({
     }[] = [];
 
     try {
-      result = globalDataPushTypeMarkTools.readJSON();
+      result = globalDataPushTypeMark.readJSON();
     } catch (error) {
       result = [];
     }
@@ -127,7 +141,8 @@ export default new CliCommand<IArgs, IOpts>({
       props.logger.info(`${item.type} 已被调用 ${item.count} 次`),
     );
 
-    globalDataPushTypeMarkTools.writeJSON(nextResult);
+    globalDataPushTypeMark.writeJSON(nextResult);
+    globalDataPushInfo.writeJSON(props.data);
     props.logger.info("记录成功");
   },
 });

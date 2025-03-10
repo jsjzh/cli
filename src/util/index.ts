@@ -9,8 +9,8 @@ import {
   writeFileSync,
   writeJSONSync,
 } from "fs-extra";
-import path from "path";
 import os from "os";
+import path from "path";
 
 import type { StdioOptions } from "child_process";
 import semver from "semver";
@@ -199,7 +199,7 @@ export const getMacRelease = () => {
   } as { name: INames; version: IVersions };
 };
 
-export const createGlobalDataTools = (
+export const createGlobalDataTools = <T = any>(
   tag: string,
   name: string,
   config?: { base: string },
@@ -217,9 +217,9 @@ export const createGlobalDataTools = (
     globalDataPath,
 
     read: () => readFileSync(globalDataPath),
-    readJSON: () => readJSONSync(globalDataPath),
+    readJSON: () => readJSONSync(globalDataPath) as T,
     write: (data: string) => writeFileSync(globalDataPath, data),
-    writeJSON: (obj: any) => writeJSONSync(globalDataPath, obj),
+    writeJSON: (obj: T) => writeJSONSync(globalDataPath, obj),
   };
 };
 
