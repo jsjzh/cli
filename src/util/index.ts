@@ -7,7 +7,7 @@ import {
   readFileSync,
   readJSONSync,
   writeFileSync,
-  writeJSONSync,
+  writeJSONSync
 } from "fs-extra";
 import os from "os";
 import path from "path";
@@ -57,9 +57,12 @@ export const createRunTools = (
 
   const getRegistry = () => getOutput("npm get registry");
 
-  const getBranch = () => getOutput("git symbolic-ref --short -q HEAD");
+  const getGitBranch = () => getOutput("git symbolic-ref --short -q HEAD");
 
   const getGitIsChange = () => !!getOutput("git status -s");
+
+  const getGitRemoteBranchIsExist = (branch: string) =>
+    !!getOutput(`git ls-remote --heads origin ${branch}`);
 
   const getVersion = (tools: string) => {
     const result = getOutput(`${tools} --version`);
@@ -104,11 +107,13 @@ export const createRunTools = (
 
   return {
     getOutput,
-    getRegistry,
-    getBranch,
     getVersion,
-    getGitIsChange,
 
+    getGitBranch,
+    getGitIsChange,
+    getGitRemoteBranchIsExist,
+
+    getRegistry,
     add: hasPnpmLock ? pnpmAdd : hasYarnLock ? yarnAdd : npmAdd,
     addDev: hasPnpmLock ? pnpmAddDev : hasYarnLock ? yarnAddDev : npmAddDev,
     update: hasPnpmLock ? pnpmUpdate : hasYarnLock ? yarnUpdate : npmUpdate,

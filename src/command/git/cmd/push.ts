@@ -1,8 +1,6 @@
 import { createGlobalDataTools, createRunTools } from "@/util";
 import { CliCommand } from "@oishi/cli-core";
 
-// TODO 需要增加一个检测，检查远程是否有分支，有的话再执行 git pull
-
 const createGitPushTagGlobalTools = <T>(name: string) =>
   createGlobalDataTools<T>("git-push", name);
 
@@ -12,8 +10,6 @@ const globalDataPushTypeMark = createGitPushTagGlobalTools<
     count: number;
   }[]
 >("pushTypeMark.json");
-const globalDataPushInfo =
-  createGitPushTagGlobalTools<Partial<IOpts & IArgs>>("pushInfo.json");
 
 // feat: 新功能、新特性
 // fix: 修改 bug
@@ -39,14 +35,6 @@ interface IOpts {
     name: string;
     email: string;
   };
-}
-
-let pushInfo: ReturnType<typeof globalDataPushInfo.readJSON> = {};
-
-try {
-  pushInfo = globalDataPushInfo.readJSON();
-} catch (error) {
-  pushInfo = {};
 }
 
 export default new CliCommand<IArgs, IOpts>({
@@ -88,34 +76,29 @@ export default new CliCommand<IArgs, IOpts>({
           value: { name: "jsjzh", email: "kimimi_king@163.com" },
         },
       ],
-      default: pushInfo?.user?.name || "jinzhehao",
     },
   },
   action(props) {
     const run = props.runCmd();
     const tools = createRunTools(run);
-    const branch = tools.getBranch();
+    const branch = tools.getGitBranch();
 
     run(`git config --local user.name "${props.data.user?.name}"`);
     run(`git config --local user.email "${props.data.user?.email}"`);
 
     const type = props.data.type?.split(": ")[0] || "chore";
 
-    const remoteBranchExists = tools.getOutput(
-      `git ls-remote --heads origin ${branch}`,
-    );
-
+    const remoteBranchExists = tools.getGitRemoteBranchIsExist(branch);
     if (remoteBranchExists) {
-      props.logger.info(`远端存在分支 ${branch}`);
+      props.logger.info(`远端存在分支，将进行 pull 更新 ${branch}`);
       run(`git pull origin ${branch}`);
     } else {
-      props.logger.info(`远端不存在分支 ${branch}`);
+      props.logger.info(`远端不存在分支，不进行 git pull 更新 ${branch}`);
     }
 
-    // 检查是否有未推送的提交
     const unpushedCommits = tools.getOutput(`git log origin/${branch}..HEAD`);
     if (unpushedCommits) {
-      props.logger.info("当前分支下有未推送的 commit，执行提交");
+      props.logger.info("当前分支下有未推送的 commit，先执行提交");
       run(`git push origin ${branch}`);
     }
 
@@ -158,7 +141,6 @@ export default new CliCommand<IArgs, IOpts>({
     );
 
     globalDataPushTypeMark.writeJSON(nextResult);
-    globalDataPushInfo.writeJSON(props.data);
     props.logger.info("记录成功");
   },
 });

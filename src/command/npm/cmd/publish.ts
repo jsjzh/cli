@@ -49,7 +49,7 @@ export default new CliCommand<IArgs, IOpts>({
     const run = props.runCmd();
     const tools = createRunTools(run);
     const oldRegistry = tools.getRegistry();
-    const branch = tools.getBranch();
+    const branch = tools.getGitBranch();
 
     await createTask({ showLog: true })
       .add({

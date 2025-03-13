@@ -7,7 +7,7 @@ export default new CliCommand({
   action(props) {
     const run = props.runCmd();
     const tools = createRunTools(run);
-    const branch = tools.getBranch();
+    const branch = tools.getGitBranch();
     run(`git pull origin ${branch}`);
     props.logger.info(`获取当前分支：${branch} 下的远程代码成功`);
   },
