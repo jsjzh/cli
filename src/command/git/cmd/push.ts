@@ -112,6 +112,13 @@ export default new CliCommand<IArgs, IOpts>({
       props.logger.info(`远端不存在分支 ${branch}`);
     }
 
+    // 检查是否有未推送的提交
+    const unpushedCommits = tools.getOutput(`git log origin/${branch}..HEAD`);
+    if (unpushedCommits) {
+      props.logger.info("当前分支下有未推送的 commit，执行提交");
+      run(`git push origin ${branch}`);
+    }
+
     if (!tools.getGitIsChange()) {
       props.logger.info("当前分支下没有变更，无需提交");
       return;
