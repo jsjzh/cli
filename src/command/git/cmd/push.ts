@@ -101,7 +101,18 @@ export default new CliCommand<IArgs, IOpts>({
 
     const type = props.data.type?.split(": ")[0] || "chore";
 
-    run(`git pull origin ${branch}`);
+    const remoteBranchExists = tools.getOutput(
+      `git ls-remote --heads origin ${branch}`,
+    );
+
+    console.log(remoteBranchExists);
+
+    if (remoteBranchExists) {
+      props.logger.error(`远端存在分支 ${branch}`);
+      run(`git pull origin ${branch}`);
+    } else {
+      props.logger.error(`远端不存在分支 ${branch}`);
+    }
 
     if (!tools.getGitIsChange()) {
       props.logger.info("当前分支下没有变更，无需提交");
