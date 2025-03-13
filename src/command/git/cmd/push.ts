@@ -105,13 +105,11 @@ export default new CliCommand<IArgs, IOpts>({
       `git ls-remote --heads origin ${branch}`,
     );
 
-    console.log(remoteBranchExists);
-
     if (remoteBranchExists) {
-      props.logger.error(`远端存在分支 ${branch}`);
+      props.logger.info(`远端存在分支 ${branch}`);
       run(`git pull origin ${branch}`);
     } else {
-      props.logger.error(`远端不存在分支 ${branch}`);
+      props.logger.info(`远端不存在分支 ${branch}`);
     }
 
     if (!tools.getGitIsChange()) {
