@@ -108,7 +108,7 @@ export default new CliCommand<IArgs, IOpts>({
     }
 
     run("git add .");
-    run(`git commit -m '${type}: ${props.data.message}'`);
+    run(`git commit -m "${type}: ${props.data.message}"`);
     run(`git push origin ${branch}`);
 
     props.logger.info(
